@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <title>Introduction to Ansible</title>
+    <link rel="stylesheet" type="text/css" href="build/build.css">
+  </head>
+  <body>
+    <article>
+      <section data-bespoke-backdrop="emphatic" class="emphatic-text">
+        <h1>Introduction to DevOps with Ansible</h1>
+      </section>
+      <section data-bespoke-backdrop="emphatic" class="emphatic-text">
+        <h2>Matteo Magni</h2>
+        <h3><a href="https://github.com/ilbonzo/TODO">TODO</a></h3>
+      </section>
+      <section data-bespoke-backdrop="emphatic" class="emphatic-text">
+        <h3>In informatica <strong>DevOps</strong> (dalla contrazione inglese di development, "sviluppo", e operations, qui simile a "messa in produzione" o "deployment") è una metodologia di sviluppo del software che punta alla comunicazione, collaborazione e integrazione tra sviluppatori e addetti alle operations dell'information technology (IT)</h3><em>[wikipedia]</em>
+      </section>
+      <section data-bespoke-backdrop="emphatic" class="emphatic-text">
+        <h3><em>Con il termine “Metodologie Agili” ci si riferisce ad una serie di metodologie di sviluppo software ispirate dal “Manifesto Agile”, impiegate per superare i limiti emersi dal modello tradizionale “a cascata” (waterfall).</em></h3><em>[wikipedia]</em>
+      </section>
+      <section data-bespoke-backdrop="emphatic" class="emphatic-text">
+        <h3>Tra le pratiche Agili una è quella di avere frequenti rilasci di nuove versioni del software:<br><br><em>An Agile team frequently releases its product into the hands of end users, listening to feedback, whether critical or appreciative..</em></h3><em>[wikipedia]</em>
+      </section>
+      <section data-bespoke-backdrop="emphatic" class="emphatic-text">
+        <h2>Rilasci</h2>
+        <p>In molte aziende però i rilasci applicativi sono eventi ad alto impatto e rischio, coinvolgendo più gruppi di lavoro.</p>
+        <p>L’obiettivo è mettere in produzione nuove feature o correzioni di bug il più velocemente possibile e con il minor numero di rischi è molto difficile</p>
+      </section>
+      <section data-bespoke-backdrop="emphatic" class="emphatic-text">
+        <ul>
+          <li>I <strong>dev</strong> spingono per mettere subito online le nuove feature</li>
+          <li>i <strong>QA</strong> inoltrano</li>
+          <li>gli <strong>operation</strong> sono molto prudenti perché sanno che toccare l’infrastruttura potrebbe creare problemi.</li>
+        </ul>
+      </section>
+      <section data-bespoke-backdrop="emphatic" class="emphatic-image"><img class="full" src="images/dev-qa-ops.gif" /></section>
+      <section data-bespoke-backdrop="emphatic" class="emphatic-text">
+        <h2>Come possiamo fare?</h2>
+      </section>
+      <section data-bespoke-backdrop="emphatic" class="emphatic-text">
+        <ul>
+          <li>Sviluppare e testare in ambienti simili a quelli di produzione</li>
+          <li>Distribuire con processi automatici, ripetibili e affidabili</li>
+          <li>Monitorare e convalidare la qualità operativa</li>
+          <li>Amplificare e accelerare il ritorno di feedback da parte degli utenti</li>
+        </ul>
+      </section>
+      <section data-bespoke-backdrop="emphatic" class="emphatic-text">
+        <h3>Continuous integration e testing</h3>
+      </section>
+      <section data-bespoke-backdrop="emphatic" class="emphatic-text">
+        <h3>Continuous delivery e deployment</h3>
+      </section>
+      <section data-bespoke-backdrop="emphatic" class="emphatic-text">
+        <h3>Continuous operations</h3>
+      </section>
+      <section data-bespoke-backdrop="emphatic" class="emphatic-text">
+        <h3>Continuous assessment</h3>
+      </section>
+      <section data-bespoke-backdrop="emphatic" class="emphatic-image"><img class="full" src="images/devops.png" /></section>
+      <section data-bespoke-backdrop="emphatic" class="emphatic-text">
+        <h2>L’utilizzo di pratiche DevOps spesso parte dal bisogno di poter creare, gestire, condividere e replicare configurazioni di ambienti complessi</h2>
+      </section>
+      <section data-bespoke-backdrop="emphatic" class="emphatic-text">
+        <p>Se pensiamo ad una infrastruttura web come ad esempio lo stack LAMP in una soluzione dove abbiamo</p>
+        <ul>
+          <li></li>
+          <li><strong>Development</strong></li>
+          <li><strong>Testing</strong></li>
+          <li><strong>Staging</strong></li>
+          <li><strong>Production</strong></li>
+        </ul>
+      </section>
+      <section data-bespoke-backdrop="emphatic" class="emphatic-image"><img class="full" src="images/dev-stage-prod.gif" /></section>
+      <section data-bespoke-backdrop="emphatic" class="emphatic-text">
+        <h3>Quando devo aggiungere una nuova dipendenza di infrastruttura?</h3>
+        <h3>Un nuovo pacchetto?</h3>
+        <h3>Un nuovo servizio?</h3>
+      </section>
+      <section data-bespoke-backdrop="emphatic" class="emphatic-image">
+        <h2><em>ecco il developer</em></h2><img class="full" src="images/developer-fear.gif" />
+      </section>
+      <section data-bespoke-backdrop="emphatic" class="emphatic-text">
+        <p><em>La metodologia DevOps aiuta le aziende nella gestione dei rilasci, standardizzando gli ambienti di sviluppo. Le aziende con problemi di automazione dei rilasci solitamente hanno già un processo automatico in essere ma lo vorrebbero più flessibile e controllabile, senza per questo dover agire da riga di comando per ottenere ciò.</em></p>
+      </section>
+      <section data-bespoke-backdrop="emphatic" class="emphatic-text">
+        <p><em>Idealmente tale automazione potrebbe essere utilizzata anche da risorse non operative (non appartenenti all'IT Operations) su ambienti non di produzione. In questo modo gli sviluppatori hanno a disposizione un maggiore controllo degli ambienti, dando all'infrastruttura una visione più incentrata sull'applicazione.[wikipedia]</em></p>
+      </section>
+      <section data-bespoke-backdrop="emphatic" class="emphatic-image"><img class="full" src="images/devops_cycle.png" /></section>
+      <section data-bespoke-backdrop="emphatic" class="emphatic-text">
+        <h2>Infrastructure as Code</h2>
+      </section>
+      <section data-bespoke-backdrop="emphatic" class="emphatic-text">
+        <p>Come sviluppatori siamo abituati a gestire diverse dipendenze tra componenti software (classi, package e librerie)</p>
+        <p>Ma anche le infrastrutture hanno delle dipendenze!</p>
+        <ul>
+          <li>File e Directory</li>
+          <li>Utenti</li>
+          <li>Software e loro configurazione</li>
+        </ul>
+      </section>
+      <section data-bespoke-backdrop="emphatic" class="emphatic-text">
+        <p>Possiamo usare un software per il controllo di versione e sfruttarne tutte le potenzialità.</p><strong>Git, Mercurial, Svn</strong>
+      </section>
+      <section data-bespoke-backdrop="emphatic" class="emphatic-text">
+        <ul>
+          <li>serve qualcuno che esegua le operazioni ripetitive</li>
+          <li><img class="full" src="images/stupid-bird.gif" /></li>
+        </ul>
+      </section>
+      <section data-bespoke-backdrop="emphatic" class="emphatic-text">
+        <h2>Ansible</h2>
+        <h3><a href="https://www.ansible.com">https://www.ansible.com</a></h3>
+      </section>
+      <section data-bespoke-backdrop="emphatic" class="emphatic-text"><em>"Deploy apps. Manage systems. Crush complexity.</em>
+        <Ansible>helps you build a strong foundation for DevOps."</Ansible>
+      </section>
+      <section data-bespoke-backdrop="emphatic" class="emphatic-text">
+        <h3>https://github.com/ansible/ansible
+          <p>Rilasciato sotto<strong>GNU GENERAL PUBLIC LICENSE</strong><strong>Version 3, 29 June 2007</strong></p>
+        </h3>
+      </section>
+      <section data-bespoke-backdrop="emphatic" class="emphatic-text"><em>The name <strong>"Ansible"</strong> references a fictional instantaneous hyperspace communication system (as featured in Orson Scott Card's Ender's Game (1985),[11] and originally invented by Ursula K. Le Guin for her novel Rocannon's World (1966)).</em></section>
+      <section data-bespoke-backdrop="emphatic" class="emphatic-text">
+        <pre><code class="language-bash">$ pip install ansible
+</code></pre>
+      </section>
+      <section data-bespoke-backdrop="emphatic" class="emphatic-text">
+        <h3>Dipendenze</h3>
+        <ul>
+          <li>Python</li>
+          <li>ssh</li>
+        </ul>
+      </section>
+      <section data-bespoke-backdrop="emphatic" class="emphatic-text"><em>Ansible works by connecting to your nodes and pushing out small programs, called "Ansible modules" to them. These programs are written to be resource models of the desired state of the system. Ansible then executes these modules (over SSH by default), and removes them when finished.</em></section>
+      <section data-bespoke-backdrop="emphatic" class="emphatic-text">
+        <h3>YAML</h3><em><strong>YAML</strong>: YAML Ain't Markup Language</em><em><strong>What It Is</strong>: YAML is a human friendly data serialization standard for all programming languages.</em><a href="http://yaml.org/">yaml.org</a>
+      </section>
+      <section data-bespoke-backdrop="emphatic" class="emphatic-image">
+        <ul>
+          <li>Inventory</li>
+          <li>Playbook</li>
+          <li>Task</li>
+          <li>Roles</li>
+          <li>Handlers</li>
+        </ul>
+      </section>
+      <section data-bespoke-backdrop="emphatic" class="emphatic-text">
+        <h2>Inventory</h2>
+      </section>
+      <section data-bespoke-backdrop="emphatic" class="emphatic-text">
+        <h2>Playbook</h2>
+      </section>
+      <section data-bespoke-backdrop="emphatic" class="emphatic-text">
+        <h2>Task</h2>
+      </section>
+      <section data-bespoke-backdrop="emphatic" class="emphatic-text">
+        <h2>Roles</h2>
+      </section>
+      <section data-bespoke-backdrop="emphatic" class="emphatic-text">
+        <h2>Handlers</h2>
+      </section>
+      <section data-bespoke-backdrop="emphatic" class="emphatic-text">
+        <p>Ci serve qualcuno che ci metta a disposizione semplicemente delle Virtual Machine.</p>
+        <p>Potrebbe essere un qualsiasi sistema di cloud.</p>
+        <p>In sviluppo possiamo usare <strong>Vagrant</strong></p>
+      </section>
+      <section data-bespoke-backdrop="emphatic" class="emphatic-text">
+        <h2>Vagrant</h2><em>"Create and configure lightweight, reproducible, and portable development environments."</em><a href="https://www.vagrantup.com/">vagrantup.com</a>
+      </section>
+      <section data-bespoke-backdrop="emphatic" class="emphatic-text">
+        <h2>Example</h2>
+      </section>
+      <section data-bespoke-backdrop="emphatic" class="emphatic-text">
+        <h2>Minecraft</h2><a href="https://github.com/ilbonzo/ansible-minecraft">github.com/ilbonzo/ansible-minecraft</a>
+      </section>
+      <section data-bespoke-backdrop="emphatic" class="emphatic-image"><img class="full" src="images/vagrant-ansible-minecraft.png" /></section>
+      <section data-bespoke-backdrop="emphatic" class="emphatic-image"><img class="full" src="images/vagrant-ansible-minecraft-2.png" /></section>
+      <section data-bespoke-backdrop="emphatic" class="emphatic-image"><img class="full" src="images/minecraft-1.png" /></section>
+      <section data-bespoke-backdrop="emphatic" class="emphatic-image"><img class="full" src="images/minecraft-2.png" /></section>
+      <section data-bespoke-backdrop="emphatic" class="emphatic-text">
+        <h3>fonti</h3>
+        <ul>
+          <li><a href="http://devops.com">devops.com</a></li>
+          <li><a href="http://losviluppatore.it/">losviluppatore.it</a></li>
+          <li><a href="https://www.ansible.com">ansible.com</a></li>
+        </ul>
+      </section>
+    </article>
+    <script src="build/build.js"></script>
+  </body>
+</html>
