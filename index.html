@@ -26,8 +26,11 @@
       </section>
       <section data-bespoke-backdrop="emphatic" class="emphatic-text">
         <h2>Rilasci</h2>
-        <p>In molte aziende però i rilasci applicativi sono eventi ad alto impatto e rischio, coinvolgendo più gruppi di lavoro.</p>
-        <p>L’obiettivo è mettere in produzione nuove feature o correzioni di bug il più velocemente possibile e con il minor numero di rischi è molto difficile</p>
+        <ul>
+          <li></li>
+          <li>In molte aziende però i rilasci applicativi sono eventi ad alto impatto e rischio, coinvolgendo più gruppi di lavoro.</li>
+          <li>L’obiettivo è mettere in produzione nuove feature o correzioni di bug il più velocemente possibile e con il minor numero di rischi è molto difficile</li>
+        </ul>
       </section>
       <section data-bespoke-backdrop="emphatic" class="emphatic-text">
         <ul>
@@ -49,20 +52,21 @@
         </ul>
       </section>
       <section data-bespoke-backdrop="emphatic" class="emphatic-text">
-        <h3>Continuous integration e testing</h3>
+        <h2>Continuous integration e testing</h2>
       </section>
       <section data-bespoke-backdrop="emphatic" class="emphatic-text">
-        <h3>Continuous delivery e deployment</h3>
+        <h2>Continuous delivery e deployment</h2>
       </section>
       <section data-bespoke-backdrop="emphatic" class="emphatic-text">
-        <h3>Continuous operations</h3>
+        <h2>Continuous operations</h2>
       </section>
       <section data-bespoke-backdrop="emphatic" class="emphatic-text">
-        <h3>Continuous assessment</h3>
+        <h2>Continuous assessment</h2>
       </section>
+      <section data-bespoke-backdrop="emphatic" class="emphatic-image"><img class="full" src="images/devops_cycle.png" /></section>
       <section data-bespoke-backdrop="emphatic" class="emphatic-image"><img class="full" src="images/devops.png" /></section>
       <section data-bespoke-backdrop="emphatic" class="emphatic-text">
-        <h2>L’utilizzo di pratiche DevOps spesso parte dal bisogno di poter creare, gestire, condividere e replicare configurazioni di ambienti complessi</h2>
+        <h3>L’utilizzo di pratiche <strong>DevOps</strong> spesso parte dal bisogno di poter creare, gestire, condividere e replicare configurazioni di ambienti complessi</h3>
       </section>
       <section data-bespoke-backdrop="emphatic" class="emphatic-text">
         <p>Se pensiamo ad una infrastruttura web come ad esempio lo stack LAMP in una soluzione dove abbiamo</p>
@@ -76,9 +80,11 @@
       </section>
       <section data-bespoke-backdrop="emphatic" class="emphatic-image"><img class="full" src="images/dev-stage-prod.gif" /></section>
       <section data-bespoke-backdrop="emphatic" class="emphatic-text">
-        <h3>Quando devo aggiungere una nuova dipendenza di infrastruttura?</h3>
-        <h3>Un nuovo pacchetto?</h3>
-        <h3>Un nuovo servizio?</h3>
+        <ul>
+          <li>Quando devo aggiungere una nuova dipendenza di infrastruttura?</li>
+          <li>Un nuovo pacchetto?</li>
+          <li>Un nuovo servizio?</li>
+        </ul>
       </section>
       <section data-bespoke-backdrop="emphatic" class="emphatic-image">
         <h2><em>ecco il developer</em></h2><img class="full" src="images/developer-fear.gif" />
@@ -89,25 +95,25 @@
       <section data-bespoke-backdrop="emphatic" class="emphatic-text">
         <p><em>Idealmente tale automazione potrebbe essere utilizzata anche da risorse non operative (non appartenenti all'IT Operations) su ambienti non di produzione. In questo modo gli sviluppatori hanno a disposizione un maggiore controllo degli ambienti, dando all'infrastruttura una visione più incentrata sull'applicazione.[wikipedia]</em></p>
       </section>
-      <section data-bespoke-backdrop="emphatic" class="emphatic-image"><img class="full" src="images/devops_cycle.png" /></section>
       <section data-bespoke-backdrop="emphatic" class="emphatic-text">
         <h2>Infrastructure as Code</h2>
       </section>
       <section data-bespoke-backdrop="emphatic" class="emphatic-text">
         <p>Come sviluppatori siamo abituati a gestire diverse dipendenze tra componenti software (classi, package e librerie)</p>
-        <p>Ma anche le infrastrutture hanno delle dipendenze!</p>
+        <p><strong><em>Ma anche le infrastrutture hanno delle dipendenze!</em></strong></p>
         <ul>
+          <li></li>
           <li>File e Directory</li>
           <li>Utenti</li>
           <li>Software e loro configurazione</li>
         </ul>
       </section>
       <section data-bespoke-backdrop="emphatic" class="emphatic-text">
-        <p>Possiamo usare un software per il controllo di versione e sfruttarne tutte le potenzialità.</p><strong>Git, Mercurial, Svn</strong>
+        <p><em>Possiamo usare un software per il controllo di versione e sfruttarne tutte le potenzialità.</em></p><strong>Git, Mercurial, Svn</strong>
       </section>
       <section data-bespoke-backdrop="emphatic" class="emphatic-text">
         <ul>
-          <li>serve qualcuno che esegua le operazioni ripetitive</li>
+          <li><em><strong>serve qualcuno che esegua le operazioni ripetitive</strong></em></li>
           <li><img class="full" src="images/stupid-bird.gif" /></li>
         </ul>
       </section>
@@ -164,9 +170,18 @@
         <h2>Handlers</h2>
       </section>
       <section data-bespoke-backdrop="emphatic" class="emphatic-text">
-        <p>Ci serve qualcuno che ci metta a disposizione semplicemente delle Virtual Machine.</p>
-        <p>Potrebbe essere un qualsiasi sistema di cloud.</p>
-        <p>In sviluppo possiamo usare <strong>Vagrant</strong></p>
+        <h2>Ansible Galaxy</h2>
+      </section>
+      <section data-bespoke-backdrop="emphatic" class="emphatic-image"><img class="full" src="images/ansible-galaxy.png" /></section>
+      <section data-bespoke-backdrop="emphatic" class="emphatic-text">
+        <h3>Virtualizzare può essere d'aiuto per sperimentare e non solo</h3>
+      </section>
+      <section data-bespoke-backdrop="emphatic" class="emphatic-text">
+        <ul>
+          <li>Ci serve qualcuno che ci metta a disposizione semplicemente delle Virtual Machine.</li>
+          <li>Potrebbe essere un qualsiasi sistema di cloud.</li>
+          <li>In sviluppo possiamo usare <strong>Vagrant</strong></li>
+        </ul>
       </section>
       <section data-bespoke-backdrop="emphatic" class="emphatic-text">
         <h2>Vagrant</h2><em>"Create and configure lightweight, reproducible, and portable development environments."</em><a href="https://www.vagrantup.com/">vagrantup.com</a>
@@ -181,6 +196,9 @@
       <section data-bespoke-backdrop="emphatic" class="emphatic-image"><img class="full" src="images/vagrant-ansible-minecraft-2.png" /></section>
       <section data-bespoke-backdrop="emphatic" class="emphatic-image"><img class="full" src="images/minecraft-1.png" /></section>
       <section data-bespoke-backdrop="emphatic" class="emphatic-image"><img class="full" src="images/minecraft-2.png" /></section>
+      <section data-bespoke-backdrop="emphatic" class="emphatic-text">
+        <h2>demo</h2><a href="https://youtu.be/ICAlhy4EI44">https://youtu.be/ICAlhy4EI44</a>
+      </section>
       <section data-bespoke-backdrop="emphatic" class="emphatic-text">
         <h3>fonti</h3>
         <ul>
