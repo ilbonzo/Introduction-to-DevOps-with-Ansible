@@ -1,0 +1,238 @@
+doctype html
+html
+  head
+    meta(charset='utf-8')
+    meta(name='viewport', content='width=device-width, initial-scale=1, maximum-scale=1')
+    title Introduction to Ansible
+
+    link(rel='stylesheet', type='text/css', href='build/build.css')
+
+  body
+
+    article
+
+      section.emphatic-text(data-bespoke-backdrop='emphatic')
+        h1 Introduction to DevOps with Ansible
+
+      section.emphatic-text(data-bespoke-backdrop='emphatic')
+        h2 Matteo Magni
+        h3 <a href="http://magni.me/Introduction-to-DevOps-with-Ansible/">magni.me/Introduction-to-DevOps-with-Ansible</a>
+
+      section.emphatic-text(data-bespoke-backdrop='emphatic')
+        h3 In informatica <strong>DevOps</strong> (dalla contrazione inglese di development, "sviluppo", e operations, qui simile a "messa in produzione" o "deployment") è una metodologia di sviluppo del software che punta alla comunicazione, collaborazione e integrazione tra sviluppatori e addetti alle operations dell'information technology (IT)
+        em [wikipedia]
+
+      section.emphatic-text(data-bespoke-backdrop='emphatic')
+        h3
+          em Con il termine “Metodologie Agili” ci si riferisce ad una serie di metodologie di sviluppo software ispirate dal “Manifesto Agile”, impiegate per superare i limiti emersi dal modello tradizionale “a cascata” (waterfall).
+        em [wikipedia]
+
+      section.emphatic-text(data-bespoke-backdrop='emphatic')
+        h3 Tra le pratiche Agili una è quella di avere frequenti rilasci di nuove versioni del software:
+          br
+          br
+          em An Agile team frequently releases its product into the hands of end users, listening to feedback, whether critical or appreciative..
+        em [wikipedia]
+
+      section.emphatic-text(data-bespoke-backdrop='emphatic')
+        h2 Rilasci
+        p In molte aziende però i rilasci applicativi sono eventi ad alto impatto e rischio, coinvolgendo più gruppi di lavoro.
+        p L’obiettivo è mettere in produzione nuove feature o correzioni di bug il più velocemente possibile e con il minor numero di rischi è molto difficile
+
+      section.emphatic-text(data-bespoke-backdrop='emphatic')
+        ul
+          li I <strong>dev</strong> spingono per mettere subito online le nuove feature
+          li i <strong>QA</strong> inoltrano
+          li gli <strong>operation</strong> sono molto prudenti perché sanno che toccare l’infrastruttura potrebbe creare problemi.
+
+      section.emphatic-image(data-bespoke-backdrop='emphatic')
+        <img class="full" src="images/dev-qa-ops.gif" />
+
+      section.emphatic-text(data-bespoke-backdrop='emphatic')
+        h2 Come possiamo fare?
+
+      section.emphatic-text(data-bespoke-backdrop='emphatic')
+        ul
+          li Sviluppare e testare in ambienti simili a quelli di produzione
+          li Distribuire con processi automatici, ripetibili e affidabili
+          li Monitorare e convalidare la qualità operativa
+          li Amplificare e accelerare il ritorno di feedback da parte degli utenti
+
+      section.emphatic-text(data-bespoke-backdrop='emphatic')
+        h3 Continuous integration e testing
+
+      section.emphatic-text(data-bespoke-backdrop='emphatic')
+        h3 Continuous delivery e deployment
+
+      section.emphatic-text(data-bespoke-backdrop='emphatic')
+        h3 Continuous operations
+
+      section.emphatic-text(data-bespoke-backdrop='emphatic')
+        h3 Continuous assessment
+
+      section.emphatic-image(data-bespoke-backdrop='emphatic')
+        <img class="full" src="images/devops.png" />
+
+      section.emphatic-text(data-bespoke-backdrop='emphatic')
+        h2 L’utilizzo di pratiche DevOps spesso parte dal bisogno di poter creare, gestire, condividere e replicare configurazioni di ambienti complessi
+
+      section.emphatic-text(data-bespoke-backdrop='emphatic')
+        p Se pensiamo ad una infrastruttura web come ad esempio lo stack LAMP in una soluzione dove abbiamo
+        ul
+          li
+          li
+            strong Development
+          li
+            strong Testing
+          li
+            strong Staging
+          li
+            strong Production
+
+      section.emphatic-image(data-bespoke-backdrop='emphatic')
+        <img class="full" src="images/dev-stage-prod.gif" />
+
+      section.emphatic-text(data-bespoke-backdrop='emphatic')
+        h3 Quando devo aggiungere una nuova dipendenza di infrastruttura?
+        h3 Un nuovo pacchetto?
+        h3 Un nuovo servizio?
+
+      section.emphatic-image(data-bespoke-backdrop='emphatic')
+        h2
+          em ecco il developer
+        <img class="full" src="images/developer-fear.gif" />
+
+      section.emphatic-text(data-bespoke-backdrop='emphatic')
+        p
+          em La metodologia DevOps aiuta le aziende nella gestione dei rilasci, standardizzando gli ambienti di sviluppo. Le aziende con problemi di automazione dei rilasci solitamente hanno già un processo automatico in essere ma lo vorrebbero più flessibile e controllabile, senza per questo dover agire da riga di comando per ottenere ciò.
+
+      section.emphatic-text(data-bespoke-backdrop='emphatic')
+        p
+          em Idealmente tale automazione potrebbe essere utilizzata anche da risorse non operative (non appartenenti all'IT Operations) su ambienti non di produzione. In questo modo gli sviluppatori hanno a disposizione un maggiore controllo degli ambienti, dando all'infrastruttura una visione più incentrata sull'applicazione.[wikipedia]
+
+      section.emphatic-image(data-bespoke-backdrop='emphatic')
+        <img class="full" src="images/devops_cycle.png" />
+
+      section.emphatic-text(data-bespoke-backdrop='emphatic')
+        h2 Infrastructure as Code
+
+      section.emphatic-text(data-bespoke-backdrop='emphatic')
+        p Come sviluppatori siamo abituati a gestire diverse dipendenze tra componenti software (classi, package e librerie)
+        p Ma anche le infrastrutture hanno delle dipendenze!
+        ul
+          li File e Directory
+          li Utenti
+          li Software e loro configurazione
+
+      section.emphatic-text(data-bespoke-backdrop='emphatic')
+        p Possiamo usare un software per il controllo di versione e sfruttarne tutte le potenzialità.
+        strong Git, Mercurial, Svn
+
+      section.emphatic-text(data-bespoke-backdrop='emphatic')
+        ul
+          li serve qualcuno che esegua le operazioni ripetitive
+          li <img class="full" src="images/stupid-bird.gif" />
+
+
+      section.emphatic-text(data-bespoke-backdrop='emphatic')
+        h2 Ansible
+        h3 <a href="https://www.ansible.com">https://www.ansible.com</a>
+
+      section.emphatic-text(data-bespoke-backdrop='emphatic')
+        em "Deploy apps. Manage systems. Crush complexity.
+        Ansible helps you build a strong foundation for DevOps."
+
+      section.emphatic-text(data-bespoke-backdrop='emphatic')
+        h3 https://github.com/ansible/ansible
+          p Rilasciato sotto
+            strong GNU GENERAL PUBLIC LICENSE
+            strong Version 3, 29 June 2007
+
+      section.emphatic-text(data-bespoke-backdrop='emphatic')
+        em The name <strong>"Ansible"</strong> references a fictional instantaneous hyperspace communication system (as featured in Orson Scott Card's Ender's Game (1985),[11] and originally invented by Ursula K. Le Guin for her novel Rocannon's World (1966)).
+
+      section.emphatic-text(data-bespoke-backdrop='emphatic')
+        pre
+          code.language-bash.
+            $ pip install ansible
+
+      section.emphatic-text(data-bespoke-backdrop='emphatic')
+        h3 Dipendenze
+        ul
+          li Python
+          li ssh
+
+      section.emphatic-text(data-bespoke-backdrop='emphatic')
+        em Ansible works by connecting to your nodes and pushing out small programs, called "Ansible modules" to them. These programs are written to be resource models of the desired state of the system. Ansible then executes these modules (over SSH by default), and removes them when finished.
+
+      section.emphatic-text(data-bespoke-backdrop='emphatic')
+        h3 YAML
+        em <strong>YAML</strong>: YAML Ain't Markup Language
+        em <strong>What It Is</strong>: YAML is a human friendly data serialization standard for all programming languages.
+        <a href="http://yaml.org/">yaml.org</a>
+
+      section.emphatic-image(data-bespoke-backdrop='emphatic')
+        ul
+          li Inventory
+          li Playbook
+          li Task
+          li Roles
+          li Handlers
+
+      section.emphatic-text(data-bespoke-backdrop='emphatic')
+        h2 Inventory
+
+      section.emphatic-text(data-bespoke-backdrop='emphatic')
+        h2 Playbook
+
+      section.emphatic-text(data-bespoke-backdrop='emphatic')
+        h2 Task
+
+      section.emphatic-text(data-bespoke-backdrop='emphatic')
+        h2 Roles
+
+      section.emphatic-text(data-bespoke-backdrop='emphatic')
+        h2 Handlers
+
+      section.emphatic-text(data-bespoke-backdrop='emphatic')
+        p Ci serve qualcuno che ci metta a disposizione semplicemente delle Virtual Machine.
+        p Potrebbe essere un qualsiasi sistema di cloud.
+        p In sviluppo possiamo usare <strong>Vagrant</strong>
+
+      section.emphatic-text(data-bespoke-backdrop='emphatic')
+        h2 Vagrant
+        em "Create and configure lightweight, reproducible, and portable development environments."
+        <a href="https://www.vagrantup.com/">vagrantup.com</a>
+
+
+      section.emphatic-text(data-bespoke-backdrop='emphatic')
+        h2 Example
+
+      section.emphatic-text(data-bespoke-backdrop='emphatic')
+        h2 Minecraft
+        <a href="https://github.com/ilbonzo/ansible-minecraft">github.com/ilbonzo/ansible-minecraft</a>
+
+      section.emphatic-image(data-bespoke-backdrop='emphatic')
+        <img class="full" src="images/vagrant-ansible-minecraft.png" />
+
+      section.emphatic-image(data-bespoke-backdrop='emphatic')
+        <img class="full" src="images/vagrant-ansible-minecraft-2.png" />
+
+      section.emphatic-image(data-bespoke-backdrop='emphatic')
+        <img class="full" src="images/minecraft-1.png" />
+
+      section.emphatic-image(data-bespoke-backdrop='emphatic')
+        <img class="full" src="images/minecraft-2.png" />
+
+      section.emphatic-text(data-bespoke-backdrop='emphatic')
+        h2 demo
+        <a href="https://youtu.be/NZJuq0rRXKs">https://youtu.be/NZJuq0rRXKs</a>
+
+      section.emphatic-text(data-bespoke-backdrop='emphatic')
+        h3 fonti
+        ul
+          li <a href="http://devops.com">devops.com</a>
+          li <a href="http://losviluppatore.it/">losviluppatore.it</a>
+          li <a href="https://www.ansible.com">ansible.com</a>
+
+    script(src='build/build.js')
