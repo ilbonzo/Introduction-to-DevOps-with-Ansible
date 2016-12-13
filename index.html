@@ -109,7 +109,7 @@
         </ul>
       </section>
       <section data-bespoke-backdrop="emphatic" class="emphatic-text">
-        <p><em>Possiamo usare un software per il controllo di versione e sfruttarne tutte le potenzialità.</em></p><strong>Git, Mercurial, Svn</strong>
+        <p><em>Possiamo usare un software per il controllo di versione e sfruttarne tutte le potenzialità.</em></p><strong>Git, Mercurial, Svn</strong><img style="max-width: 70%" src="images/git-diff.png" />
       </section>
       <section data-bespoke-backdrop="emphatic" class="emphatic-text">
         <ul>
@@ -129,7 +129,7 @@
           <p><br><br><strong>GNU GENERAL PUBLIC LICENSE</strong><br><em>Version 3</em></p>
         </h3>
       </section>
-      <section data-bespoke-backdrop="emphatic" class="emphatic-text"><em>The name <strong>"Ansible"</strong> references a fictional instantaneous hyperspace communication system (as featured in Orson Scott Card's Ender's Game (1985),[11] and originally invented by Ursula K. Le Guin for her novel Rocannon's World (1966)).</em></section>
+      <section data-bespoke-backdrop="emphatic" class="emphatic-text"><em>The name <strong>"Ansible"</strong> references a fictional instantaneous hyperspace communication system (as featured in Orson Scott Card's Ender's Game (1985), and originally invented by Ursula K. Le Guin for her novel Rocannon's World (1966)).</em></section>
       <section data-bespoke-backdrop="emphatic" class="emphatic-text"><em>debian</em>
         <pre><code class="language-bash">$ deb http://ppa.launchpad.net/ansible/ansible/ubuntu trusty main
 $ sudo apt-get update
@@ -165,27 +165,75 @@ dependencies: []
       </section>
       <section data-bespoke-backdrop="emphatic" class="emphatic-image">
         <ul>
+          <li>
+            <h2>Ansible glossary</h2>
+          </li>
           <li>Inventory</li>
           <li>Playbook</li>
-          <li>Task</li>
+          <li>Tasks</li>
+          <li>Variables</li>
           <li>Roles</li>
           <li>Handlers</li>
         </ul>
       </section>
       <section data-bespoke-backdrop="emphatic" class="emphatic-text">
         <h2>Inventory</h2>
+        <pre><code class="language-yaml">[databases]
+stp.ilbonzo.net     ansible_ssh_user=scott
+
+[webservers]
+aic.ilbonzo.net     ansible_ssh_user=layne
+</code></pre>
       </section>
       <section data-bespoke-backdrop="emphatic" class="emphatic-text">
         <h2>Playbook</h2>
+        <pre><code class="language-yaml">- hosts: all
+  sudo: true
+  handlers:
+    - include: handlers/main.yml
+  pre_tasks:
+    - name: update apt cache
+      shell: apt-get update
+    - name: upgrade apt
+      shell: apt-get upgrade -y
+  roles:
+    - webserver
+    - database
+- include: nfs.yml
+</code></pre>
       </section>
       <section data-bespoke-backdrop="emphatic" class="emphatic-text">
-        <h2>Task</h2>
+        <h2>Tasks</h2>
+        <pre><code class="language-yaml">- name: add group devel
+  group: name=devel state=present
+  </code></pre>
       </section>
       <section data-bespoke-backdrop="emphatic" class="emphatic-text">
-        <h2>Roles</h2>
+        <h2>Variables</h2>
+        <pre><code class="language-yaml">user: vagrant
+group: www-data
+document_root: /var/www/officina-linux.it
+</code></pre>
       </section>
       <section data-bespoke-backdrop="emphatic" class="emphatic-text">
         <h2>Handlers</h2>
+        <pre><code class="language-yaml">- name: restart postgresql
+  service: name=postgresql state=restarted
+- name: stop postgresql
+  service: name=postgresql state=stopped
+- name: start postgresql
+  service: name=postgresql state=started
+  </code></pre>
+      </section>
+      <section data-bespoke-backdrop="emphatic" class="emphatic-text">
+        <h2>Roles</h2>
+        <pre><code class="language-yaml">╰─➤  ls -l database
+  total 0
+  drwxr-xr-x  10 bonzo  staff  340 Dec  6 10:45 files
+  drwxr-xr-x  10 bonzo  staff  340 Dec  6 10:45 handlers
+  drwxr-xr-x  10 bonzo  staff  340 Dec  6 10:45 tasks
+  drwxr-xr-x   5 bonzo  staff  170 Dec  6 10:45 templates
+  </code></pre>
       </section>
       <section data-bespoke-backdrop="emphatic" class="emphatic-text">
         <h2>Ansible Galaxy</h2>
@@ -220,9 +268,10 @@ dependencies: []
       <section data-bespoke-backdrop="emphatic" class="emphatic-text">
         <h3>fonti</h3>
         <ul>
+          <li><a href="https://www.ansible.com">ansible.com</a></li>
           <li><a href="http://devops.com">devops.com</a></li>
           <li><a href="http://losviluppatore.it/">losviluppatore.it</a></li>
-          <li><a href="https://www.ansible.com">ansible.com</a></li>
+          <li><a href="https://www.ibuildings.it/">buildings.it</a></li>
         </ul>
       </section>
     </article>
