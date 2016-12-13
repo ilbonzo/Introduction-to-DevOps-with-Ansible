@@ -13,7 +13,7 @@
       </section>
       <section data-bespoke-backdrop="emphatic" class="emphatic-text">
         <h2>Matteo Magni</h2>
-        <h3><a href="http://magni.me/Introduction-to-DevOps-with-Ansible/">magni.me/Introduction-to-DevOps-with-Ansible</a></h3>
+        <h3><a href="http://magni.me/Introduction-to-DevOps-with-Ansible/">magni.me/Introduction-to-DevOps-with-Ansible</a></h3><img style="width: 25%" src="images/officina-linux.jpg" />
       </section>
       <section data-bespoke-backdrop="emphatic" class="emphatic-text">
         <h3>In informatica <strong>DevOps</strong> (dalla contrazione inglese di development, "sviluppo", e operations, qui simile a "messa in produzione" o "deployment") è una metodologia di sviluppo del software che punta alla comunicazione, collaborazione e integrazione tra sviluppatori e addetti alle operations dell'information technology (IT)</h3><em>[wikipedia]</em>
@@ -169,11 +169,11 @@ dependencies: []
             <h2>Ansible glossary</h2>
           </li>
           <li>Inventory</li>
-          <li>Playbook</li>
           <li>Tasks</li>
           <li>Variables</li>
           <li>Roles</li>
           <li>Handlers</li>
+          <li>Playbook</li>
         </ul>
       </section>
       <section data-bespoke-backdrop="emphatic" class="emphatic-text">
@@ -186,26 +186,11 @@ aic.ilbonzo.net     ansible_ssh_user=layne
 </code></pre>
       </section>
       <section data-bespoke-backdrop="emphatic" class="emphatic-text">
-        <h2>Playbook</h2>
-        <pre><code class="language-yaml">- hosts: all
-  sudo: true
-  handlers:
-    - include: handlers/main.yml
-  pre_tasks:
-    - name: update apt cache
-      shell: apt-get update
-    - name: upgrade apt
-      shell: apt-get upgrade -y
-  roles:
-    - webserver
-    - database
-- include: nfs.yml
-</code></pre>
-      </section>
-      <section data-bespoke-backdrop="emphatic" class="emphatic-text">
         <h2>Tasks</h2>
         <pre><code class="language-yaml">- name: add group devel
   group: name=devel state=present
+- name: Apache | install apache
+  apt: name=apache2 state=latest
   </code></pre>
       </section>
       <section data-bespoke-backdrop="emphatic" class="emphatic-text">
@@ -236,6 +221,23 @@ document_root: /var/www/officina-linux.it
   </code></pre>
       </section>
       <section data-bespoke-backdrop="emphatic" class="emphatic-text">
+        <h2>Playbook</h2>
+        <pre><code class="language-yaml">- hosts: all
+  sudo: true
+  handlers:
+    - include: handlers/main.yml
+  pre_tasks:
+    - name: update apt cache
+      shell: apt-get update
+    - name: upgrade apt
+      shell: apt-get upgrade -y
+  roles:
+    - webserver
+    - database
+- include: nfs.yml
+</code></pre>
+      </section>
+      <section data-bespoke-backdrop="emphatic" class="emphatic-text">
         <h2>Ansible Galaxy</h2>
       </section>
       <section data-bespoke-backdrop="emphatic" class="emphatic-image"><img class="full" src="images/ansible-galaxy.png" /></section>
@@ -253,13 +255,29 @@ document_root: /var/www/officina-linux.it
         <h2>Vagrant</h2><em>"Create and configure lightweight, reproducible, and portable development environments."</em><a href="https://www.vagrantup.com/">vagrantup.com</a>
       </section>
       <section data-bespoke-backdrop="emphatic" class="emphatic-text">
-        <h2>Example</h2>
+        <h2>Provider</h2>
+        <ul>
+          <li>
+            <h3>Virtualbox</h3>
+          </li>
+          <li>
+            <h3>VMware</h3>
+          </li>
+          <li>
+            <h3>Hyper-V</h3>
+          </li>
+          <li>
+            <h3>Docker</h3>
+          </li>
+        </ul>
       </section>
+      <section data-bespoke-backdrop="emphatic" class="emphatic-text"><img style="width: 60%" src="images/minecraft.svg" /></section>
       <section data-bespoke-backdrop="emphatic" class="emphatic-text">
-        <h2>Minecraft</h2><a href="https://github.com/ilbonzo/ansible-minecraft">github.com/ilbonzo/ansible-minecraft</a>
+        <h3>Galaxy role</h3><a href="https://github.com/ilbonzo/ansible-minecraft">github.com/ilbonzo/ansible-minecraft</a>
       </section>
       <section data-bespoke-backdrop="emphatic" class="emphatic-image"><img class="full" src="images/vagrant-ansible-minecraft.png" /></section>
       <section data-bespoke-backdrop="emphatic" class="emphatic-image"><img class="full" src="images/vagrant-ansible-minecraft-2.png" /></section>
+      <section data-bespoke-backdrop="emphatic" class="emphatic-image"><img style="width:80%" src="images/virtual-box.png" /></section>
       <section data-bespoke-backdrop="emphatic" class="emphatic-image"><img class="full" src="images/minecraft-1.png" /></section>
       <section data-bespoke-backdrop="emphatic" class="emphatic-image"><img class="full" src="images/minecraft-2.png" /></section>
       <section data-bespoke-backdrop="emphatic" class="emphatic-text">
@@ -273,6 +291,13 @@ document_root: /var/www/officina-linux.it
           <li><a href="http://losviluppatore.it/">losviluppatore.it</a></li>
           <li><a href="https://www.ibuildings.it/">buildings.it</a></li>
         </ul>
+      </section>
+      <section data-bespoke-backdrop="emphatic" class="emphatic-text">
+        <h1>Questions?</h1>
+      </section>
+      <section data-bespoke-backdrop="emphatic" class="emphatic-text">
+        <h2>Thanks to</h2>
+        <h3><a href="http://officina-linux.it/">officina-linux.it</a></h3><img style="width: 45%" src="images/officina-linux.jpg" />
       </section>
     </article>
     <script src="build/build.js"></script>
