@@ -125,12 +125,16 @@
         <Ansible>helps you build a strong foundation for DevOps."</Ansible>
       </section>
       <section data-bespoke-backdrop="emphatic" class="emphatic-text">
-        <h3>https://github.com/ansible/ansible
-          <p>Rilasciato sotto<strong>GNU GENERAL PUBLIC LICENSE</strong><strong>Version 3, 29 June 2007</strong></p>
+        <h3><a href="https://github.com/ansible/ansible">github.com/ansible/ansible</a>
+          <p><br><br><strong>GNU GENERAL PUBLIC LICENSE</strong><br><em>Version 3</em></p>
         </h3>
       </section>
       <section data-bespoke-backdrop="emphatic" class="emphatic-text"><em>The name <strong>"Ansible"</strong> references a fictional instantaneous hyperspace communication system (as featured in Orson Scott Card's Ender's Game (1985),[11] and originally invented by Ursula K. Le Guin for her novel Rocannon's World (1966)).</em></section>
-      <section data-bespoke-backdrop="emphatic" class="emphatic-text">
+      <section data-bespoke-backdrop="emphatic" class="emphatic-text"><em>debian</em>
+        <pre><code class="language-bash">$ deb http://ppa.launchpad.net/ansible/ansible/ubuntu trusty main
+$ sudo apt-get update
+$ sudo apt-get install ansible</code></pre><em>fedora</em>
+        <pre><code class="language-bash">$ sudo dnf -y install ansible</code></pre><em>Pip</em>
         <pre><code class="language-bash">$ pip install ansible
 </code></pre>
       </section>
@@ -144,6 +148,20 @@
       <section data-bespoke-backdrop="emphatic" class="emphatic-text"><em>Ansible works by connecting to your nodes and pushing out small programs, called "Ansible modules" to them. These programs are written to be resource models of the desired state of the system. Ansible then executes these modules (over SSH by default), and removes them when finished.</em></section>
       <section data-bespoke-backdrop="emphatic" class="emphatic-text">
         <h3>YAML</h3><em><strong>YAML</strong>: YAML Ain't Markup Language</em><em><strong>What It Is</strong>: YAML is a human friendly data serialization standard for all programming languages.</em><a href="http://yaml.org/">yaml.org</a>
+      </section>
+      <section data-bespoke-backdrop="emphatic" class="emphatic-text">
+        <pre><code class="language-yaml">galaxy_info:
+author: Matteo Magni
+description: just another geek
+license: license Apache 2.0
+platforms:
+  - name: Debian
+    versions:
+    - jessie
+categories:
+  - system
+dependencies: []
+</code></pre>
       </section>
       <section data-bespoke-backdrop="emphatic" class="emphatic-image">
         <ul>
