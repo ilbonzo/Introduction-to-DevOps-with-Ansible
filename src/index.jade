@@ -17,6 +17,7 @@ html
       section.emphatic-text(data-bespoke-backdrop='emphatic')
         h2 Matteo Magni
         h3 <a href="http://magni.me/Introduction-to-DevOps-with-Ansible/">magni.me/Introduction-to-DevOps-with-Ansible</a>
+        <img style="width: 25%" src="images/officina-linux.jpg" />
 
       section.emphatic-text(data-bespoke-backdrop='emphatic')
         h3 In informatica <strong>DevOps</strong> (dalla contrazione inglese di development, "sviluppo", e operations, qui simile a "messa in produzione" o "deployment") è una metodologia di sviluppo del software che punta alla comunicazione, collaborazione e integrazione tra sviluppatori e addetti alle operations dell'information technology (IT)
@@ -82,7 +83,7 @@ html
         h3 L’utilizzo di pratiche <strong>DevOps</strong> spesso parte dal bisogno di poter creare, gestire, condividere e replicare configurazioni di ambienti complessi
 
       section.emphatic-text(data-bespoke-backdrop='emphatic')
-        p Se pensiamo ad una infrastruttura web come ad esempio lo stack LAMP in una soluzione dove abbiamo
+        p Se pensiamo ad una infrastruttura web come ad esempio lo stack LAMP in una soluzione dove abbiamo più ambienti
         ul
           li
           li
@@ -105,19 +106,22 @@ html
 
       section.emphatic-image(data-bespoke-backdrop='emphatic')
         h2
-          em ecco il developer
+          em developer
         <img class="full" src="images/developer-fear.gif" />
 
       section.emphatic-text(data-bespoke-backdrop='emphatic')
         p
-          em La metodologia DevOps aiuta le aziende nella gestione dei rilasci, standardizzando gli ambienti di sviluppo. Le aziende con problemi di automazione dei rilasci solitamente hanno già un processo automatico in essere ma lo vorrebbero più flessibile e controllabile, senza per questo dover agire da riga di comando per ottenere ciò.
+          em La metodologia <strong>DevOps</strong> aiuta le aziende nella gestione dei rilasci, standardizzando gli ambienti di sviluppo.
+          br
+          br
+          em Le aziende con problemi di automazione dei rilasci solitamente hanno già un processo automatico in essere ma lo vorrebbero più flessibile e controllabile.
 
       section.emphatic-text(data-bespoke-backdrop='emphatic')
         p
           em Idealmente tale automazione potrebbe essere utilizzata anche da risorse non operative (non appartenenti all'IT Operations) su ambienti non di produzione. In questo modo gli sviluppatori hanno a disposizione un maggiore controllo degli ambienti, dando all'infrastruttura una visione più incentrata sull'applicazione.[wikipedia]
 
       section.emphatic-text(data-bespoke-backdrop='emphatic')
-        h2 Infrastructure as Code
+        <img style="width: 50%" src="images/infrastructure_as_code_medium.png" />
 
       section.emphatic-text(data-bespoke-backdrop='emphatic')
         p Come sviluppatori siamo abituati a gestire diverse dipendenze tra componenti software (classi, package e librerie)
@@ -134,6 +138,7 @@ html
         p
           em Possiamo usare un software per il controllo di versione e sfruttarne tutte le potenzialità.
         strong Git, Mercurial, Svn
+        <img style="max-width: 70%" src="images/git-diff.png" />
 
       section.emphatic-text(data-bespoke-backdrop='emphatic')
         ul
@@ -149,18 +154,33 @@ html
 
       section.emphatic-text(data-bespoke-backdrop='emphatic')
         em "Deploy apps. Manage systems. Crush complexity.
-        Ansible helps you build a strong foundation for DevOps."
+        em Ansible helps you build a strong foundation for DevOps."
 
       section.emphatic-text(data-bespoke-backdrop='emphatic')
-        h3 https://github.com/ansible/ansible
-          p Rilasciato sotto
+        h3
+          a(href="https://github.com/ansible/ansible") github.com/ansible/ansible
+          p
+            br
+            br
             strong GNU GENERAL PUBLIC LICENSE
-            strong Version 3, 29 June 2007
+            br
+            em Version 3
 
       section.emphatic-text(data-bespoke-backdrop='emphatic')
-        em The name <strong>"Ansible"</strong> references a fictional instantaneous hyperspace communication system (as featured in Orson Scott Card's Ender's Game (1985),[11] and originally invented by Ursula K. Le Guin for her novel Rocannon's World (1966)).
+        em The name <strong>"Ansible"</strong> references a fictional instantaneous hyperspace communication system (as featured in Orson Scott Card's Ender's Game (1985), and originally invented by Ursula K. Le Guin for her novel Rocannon's World (1966)).
 
       section.emphatic-text(data-bespoke-backdrop='emphatic')
+        em debian
+        pre
+          code.language-bash.
+            $ deb http://ppa.launchpad.net/ansible/ansible/ubuntu trusty main
+            $ sudo apt-get update
+            $ sudo apt-get install ansible
+        em fedora
+        pre
+          code.language-bash.
+            $ sudo dnf -y install ansible
+        em Pip
         pre
           code.language-bash.
             $ pip install ansible
@@ -180,28 +200,99 @@ html
         em <strong>What It Is</strong>: YAML is a human friendly data serialization standard for all programming languages.
         <a href="http://yaml.org/">yaml.org</a>
 
+      section.emphatic-text(data-bespoke-backdrop='emphatic')
+        pre
+          code.language-yaml.
+            galaxy_info:
+            author: Matteo Magni
+            description: just another geek
+            license: license Apache 2.0
+            platforms:
+              - name: Debian
+                versions:
+                - jessie
+            categories:
+              - system
+            dependencies: []
+
       section.emphatic-image(data-bespoke-backdrop='emphatic')
+
         ul
+          li
+            h2 Ansible glossary
           li Inventory
-          li Playbook
-          li Task
+          li Tasks
+          li Variables
           li Roles
           li Handlers
+          li Playbook
 
       section.emphatic-text(data-bespoke-backdrop='emphatic')
         h2 Inventory
+        pre
+          code.language-yaml.
+            [databases]
+            stp.ilbonzo.net     ansible_ssh_user=scott
+
+            [webservers]
+            aic.ilbonzo.net     ansible_ssh_user=layne
 
       section.emphatic-text(data-bespoke-backdrop='emphatic')
-        h2 Playbook
+        h2 Tasks
+        pre
+          code.language-yaml.
+            - name: add group devel
+              group: name=devel state=present
+            - name: Apache | install apache
+              apt: name=apache2 state=latest
 
       section.emphatic-text(data-bespoke-backdrop='emphatic')
-        h2 Task
-
-      section.emphatic-text(data-bespoke-backdrop='emphatic')
-        h2 Roles
+        h2 Variables
+        pre
+          code.language-yaml.
+            user: vagrant
+            group: www-data
+            document_root: /var/www/officina-linux.it
 
       section.emphatic-text(data-bespoke-backdrop='emphatic')
         h2 Handlers
+        pre
+          code.language-yaml.
+            - name: restart postgresql
+              service: name=postgresql state=restarted
+            - name: stop postgresql
+              service: name=postgresql state=stopped
+            - name: start postgresql
+              service: name=postgresql state=started
+
+      section.emphatic-text(data-bespoke-backdrop='emphatic')
+        h2 Roles
+        pre
+          code.language-yaml.
+            ╰─➤  ls -l database
+              total 0
+              drwxr-xr-x  10 bonzo  staff  340 Dec  6 10:45 files
+              drwxr-xr-x  10 bonzo  staff  340 Dec  6 10:45 handlers
+              drwxr-xr-x  10 bonzo  staff  340 Dec  6 10:45 tasks
+              drwxr-xr-x   5 bonzo  staff  170 Dec  6 10:45 templates
+
+      section.emphatic-text(data-bespoke-backdrop='emphatic')
+        h2 Playbook
+        pre
+          code.language-yaml.
+            - hosts: all
+              sudo: true
+              handlers:
+                - include: handlers/main.yml
+              pre_tasks:
+                - name: update apt cache
+                  shell: apt-get update
+                - name: upgrade apt
+                  shell: apt-get upgrade -y
+              roles:
+                - webserver
+                - database
+            - include: nfs.yml
 
       section.emphatic-text(data-bespoke-backdrop='emphatic')
         h2 Ansible Galaxy
@@ -224,10 +315,22 @@ html
         <a href="https://www.vagrantup.com/">vagrantup.com</a>
 
       section.emphatic-text(data-bespoke-backdrop='emphatic')
-        h2 Example
+        h2 Provider
+        ul
+          li
+            h3 Virtualbox
+          li
+            h3 VMware
+          li
+            h3 Hyper-V
+          li
+            h3 Docker
 
       section.emphatic-text(data-bespoke-backdrop='emphatic')
-        h2 Minecraft
+        <img style="width: 60%" src="images/minecraft.svg" />
+
+      section.emphatic-text(data-bespoke-backdrop='emphatic')
+        h3 Galaxy role
         <a href="https://github.com/ilbonzo/ansible-minecraft">github.com/ilbonzo/ansible-minecraft</a>
 
       section.emphatic-image(data-bespoke-backdrop='emphatic')
@@ -235,6 +338,9 @@ html
 
       section.emphatic-image(data-bespoke-backdrop='emphatic')
         <img class="full" src="images/vagrant-ansible-minecraft-2.png" />
+
+      section.emphatic-image(data-bespoke-backdrop='emphatic')
+        <img style="width:80%" src="images/virtual-box.png" />
 
       section.emphatic-image(data-bespoke-backdrop='emphatic')
         <img class="full" src="images/minecraft-1.png" />
@@ -249,8 +355,20 @@ html
       section.emphatic-text(data-bespoke-backdrop='emphatic')
         h3 fonti
         ul
-          li <a href="http://devops.com">devops.com</a>
-          li <a href="http://losviluppatore.it/">losviluppatore.it</a>
           li <a href="https://www.ansible.com">ansible.com</a>
+          li <a href="http://devops.com">devops.com</a>
+          li <a href="http://github.com">github.com</a>
+          li <a href="http://devopsreactions.tumblr.com/">devopsreactions.tumblr.com</a>
+          li <a href="http://losviluppatore.it/">losviluppatore.it</a>
+          li <a href="https://www.ibuildings.it/">buildings.it</a>
+
+      section.emphatic-text(data-bespoke-backdrop='emphatic')
+        h1 Questions?
+
+      section.emphatic-text(data-bespoke-backdrop='emphatic')
+        h2 Thanks to
+        h3
+          a(href="http://officina-linux.it/") officina-linux.it
+        <img style="width: 45%" src="images/officina-linux.jpg" />
 
     script(src='build/build.js')
