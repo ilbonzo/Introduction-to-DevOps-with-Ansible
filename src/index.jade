@@ -382,6 +382,13 @@ html
           <a href="https://www.vagrantup.com/intro/getting-started/boxes.html">https://www.vagrantup.com/intro/getting-started/boxes.html</a>
 
       section.emphatic-text(data-bespoke-backdrop='emphatic')
+        h2 Vagrant Box
+        pre
+          code.language-yaml.
+            $ vagrant box list
+            $ vagrant box add debian/jessie64
+
+      section.emphatic-text(data-bespoke-backdrop='emphatic')
         h3 Vagrant Box
         pre
           code.language-yaml.
@@ -481,6 +488,28 @@ html
                   apt: update_cache=yes
 
       section.emphatic-text(data-bespoke-backdrop='emphatic')
+        h2 Provisioning
+        h3 Ansible on windows
+        pre
+          code.language-yaml.
+            ## if you don't want ansible on host
+            config.vm.provision :shell, :path => "ansible/provision.sh"
+
+      section.emphatic-text(data-bespoke-backdrop='emphatic')
+        h2 Provisioning
+        h3 Ansible on windows
+        pre
+          code.language-yaml.
+            #!/bin/bash
+            sudo apt-get update
+            sudo apt-get install -y python-pip python-dev python-pycurl
+            sudo pip install ansible
+            sudo mkdir -p /etc/ansible
+            printf '[vagrant]\nlocalhost\n' | sudo tee /etc/ansible/hosts > /dev/null
+            echo Running provisioner: ansible
+            PYTHONUNBUFFERED=1 ansible-playbook -c local /workspace/tools/ansible/playbook.yml
+
+      section.emphatic-text(data-bespoke-backdrop='emphatic')
         h2 Version Control System
         h3 (VCS)
 
@@ -492,9 +521,73 @@ html
         <a href="http://rogerdudler.github.io/git-guide/">http://rogerdudler.github.io/git-guide/</a>
         <a href="http://rogerdudler.github.io/git-guide/files/git_cheat_sheet.pdf">http://rogerdudler.github.io/git-guide/files/git_cheat_sheet.pdf</a>
 
-        Our git repository
+        p Our git repository
         <a href="https://github.com/ilbonzo/Rocannon">https://github.com/ilbonzo/Rocannon</a>
 
+      section.emphatic-text(data-bespoke-backdrop='emphatic')
+        h2 Inventory
+        ul
+          li static inventory
+          li dynamic inventory
+
+      section.emphatic-text(data-bespoke-backdrop='emphatic')
+        h2 Static Inventory
+        pre
+          code.language-yaml.
+            [databases]
+            stp.ilbonzo.net     ansible_user=scott
+
+            [webservers]
+            aic.ilbonzo.net     ansible_user=layne
+
+      section.emphatic-text(data-bespoke-backdrop='emphatic')
+        h2 Inventory list
+        pre
+          code.language-yaml.
+            $ ansible --list-hosts web
+              hosts (1):
+                ilbonzo.net
+        pre
+          code
+            # linux
+            $ /etc/ansible/hosts
+            # osx
+            $ /usr/local/etc/ansible/hosts
+
+      section.emphatic-text(data-bespoke-backdrop='emphatic')
+        h2 Local inventory
+        pre
+          code.language-yaml.
+            $ ansible -i hosts --list-hosts all                                                                                                                    5 ↵
+              hosts (4):
+                web01
+                web02
+                db01
+                db02
+
+      section.emphatic-text(data-bespoke-backdrop='emphatic')
+        h2 Subset
+        pre
+          code.language-yaml.
+            $ ansible -i hosts --list-hosts webserver                                                                                                                   5 ↵
+              hosts (4):
+                web01
+                web02
+
+            $ ansible -i hosts --list-hosts webserver:dbserver                                                                                                                   5 ↵
+              hosts (4):
+                web01
+                web02
+                db01
+                db02
+
+      section.emphatic-text(data-bespoke-backdrop='emphatic')
+        h2 Local inventory
+        pre
+          code.language-yaml.
+            ansible_user=vagrant
+            ansible_port=2606
+            ansible_ssh_private_key_file=~/.ssh/id_rsa
 
       section.emphatic-text(data-bespoke-backdrop='emphatic')
         h3 fonti
