@@ -301,6 +301,36 @@ html
         <img class="full" src="images/ansible-galaxy.png" />
 
       section.emphatic-text(data-bespoke-backdrop='emphatic')
+        <img style="width: 60%" src="images/minecraft.svg" />
+
+      section.emphatic-text(data-bespoke-backdrop='emphatic')
+        h3 Galaxy role
+        <a href="https://github.com/ilbonzo/ansible-minecraft">github.com/ilbonzo/ansible-minecraft</a>
+
+      section.emphatic-image(data-bespoke-backdrop='emphatic')
+        <img class="full" src="images/vagrant-ansible-minecraft.png" />
+
+      section.emphatic-image(data-bespoke-backdrop='emphatic')
+        <img class="full" src="images/vagrant-ansible-minecraft-2.png" />
+
+      section.emphatic-image(data-bespoke-backdrop='emphatic')
+        <img style="width:80%" src="images/virtual-box.png" />
+
+      section.emphatic-image(data-bespoke-backdrop='emphatic')
+        <img class="full" src="images/minecraft-1.png" />
+
+      section.emphatic-image(data-bespoke-backdrop='emphatic')
+        <img class="full" src="images/minecraft-2.png" />
+
+      section.emphatic-text(data-bespoke-backdrop='emphatic')
+        <iframe width="560" height="315" src="https://www.youtube.com/embed/ICAlhy4EI44" frameborder="0" allowfullscreen></iframe>
+        br
+        <a href="https://youtu.be/ICAlhy4EI44">https://youtu.be/ICAlhy4EI44</a>
+
+      section.emphatic-text(data-bespoke-backdrop='emphatic')
+        h3 Iniziamo a provare
+
+      section.emphatic-text(data-bespoke-backdrop='emphatic')
         h3 Virtualizzare può essere d'aiuto per sperimentare e non solo
 
       section.emphatic-text(data-bespoke-backdrop='emphatic')
@@ -327,31 +357,144 @@ html
             h3 Docker
 
       section.emphatic-text(data-bespoke-backdrop='emphatic')
-        <img style="width: 60%" src="images/minecraft.svg" />
+        h2 commands
+        ul
+          li
+            h4 $ vagrant init
+          li
+            h4 $ vagrant up
+          li
+            h4 $ vagrant halt
+          li
+            h4 $ vagrant reload
 
       section.emphatic-text(data-bespoke-backdrop='emphatic')
-        h3 Galaxy role
-        <a href="https://github.com/ilbonzo/ansible-minecraft">github.com/ilbonzo/ansible-minecraft</a>
-
-      section.emphatic-image(data-bespoke-backdrop='emphatic')
-        <img class="full" src="images/vagrant-ansible-minecraft.png" />
-
-      section.emphatic-image(data-bespoke-backdrop='emphatic')
-        <img class="full" src="images/vagrant-ansible-minecraft-2.png" />
-
-      section.emphatic-image(data-bespoke-backdrop='emphatic')
-        <img style="width:80%" src="images/virtual-box.png" />
-
-      section.emphatic-image(data-bespoke-backdrop='emphatic')
-        <img class="full" src="images/minecraft-1.png" />
-
-      section.emphatic-image(data-bespoke-backdrop='emphatic')
-        <img class="full" src="images/minecraft-2.png" />
+        h3 Vagrantfile
+        pre
+          code.language-yaml.
+            Vagrant.configure("2") do |config|
+              config.vm.box = "base"
+            end
 
       section.emphatic-text(data-bespoke-backdrop='emphatic')
-        <iframe width="560" height="315" src="https://www.youtube.com/embed/ICAlhy4EI44" frameborder="0" allowfullscreen></iframe>
-        br
-        <a href="https://youtu.be/ICAlhy4EI44">https://youtu.be/ICAlhy4EI44</a>
+        h2 Vagrant Box
+        p
+          <a href="https://www.vagrantup.com/intro/getting-started/boxes.html">https://www.vagrantup.com/intro/getting-started/boxes.html</a>
+
+      section.emphatic-text(data-bespoke-backdrop='emphatic')
+        h3 Vagrant Box
+        pre
+          code.language-yaml.
+            Vagrant.configure("2") do |config|
+              config.vm.box = "debian/jessie64"
+            end
+
+      section.emphatic-text(data-bespoke-backdrop='emphatic')
+        h3 Vagrant Networking
+        pre
+          code.language-yaml.
+              config.vm.hostname = "rocannon"
+              config.vm.network :forwarded_port, guest: 80, host: 8080
+              config.vm.network "private_network", ip: "192.168.33.66"
+
+      section.emphatic-text(data-bespoke-backdrop='emphatic')
+        h3 Vagrant ssh login
+        pre
+          code.language-yaml.
+              $ vagrant ssh
+
+      section.emphatic-text(data-bespoke-backdrop='emphatic')
+        h3 Attivare ssh "normale"
+        p
+          em config.ssh.forward_agent
+        p
+          em If true, agent forwarding over SSH connections is enabled. Defaults to false.
+        pre
+          code.language-yaml.
+             config.ssh.forward_agent = true
+
+      section.emphatic-text(data-bespoke-backdrop='emphatic')
+        h3 Debian login ssh con password
+        p
+          em
+            strong $ sudo vi /etc/ssh/sshd_config
+        pre
+          code.language-yaml.
+             PasswordAuthentication yes
+        p
+          em
+            strong $ sudo service ssh restart
+        p ora possiamo entrare nella macchina in ssh "classico"
+        p
+          em
+            strong ssh vagrant@192.168.33.66
+
+      section.emphatic-text(data-bespoke-backdrop='emphatic')
+        h2 Provider configuration
+        h3 Virtualbox
+        pre
+          code.language-yaml.
+            config.vm.provider "virtualbox" do |v|
+              v.name = "rocannon-debian"
+              v.memory = 512
+              v.cpus = 2
+            end
+
+      section.emphatic-text(data-bespoke-backdrop='emphatic')
+        h2 Provisioning
+        h3 Ansible
+        pre
+          code.language-yaml.
+            config.vm.provision "shell",
+              inline: "sudo apt-get -y update && sudo apt-get -y install lynx"
+
+      section.emphatic-text(data-bespoke-backdrop='emphatic')
+        h2 Provisioning
+        h3 Ansible
+        pre
+          code.language-yaml.
+            config.vm.provision :ansible do |ansible|
+              ansible.groups = {
+                "development" => ["default"],
+                "all_groups:children" => ["development"]
+
+              }
+              ansible.playbook = "ansible/playbook.yml"
+            end
+
+      section.emphatic-text(data-bespoke-backdrop='emphatic')
+        h2 First playbook
+        pre
+          code.language-yaml.
+            - hosts: all
+              become: true
+              pre_tasks:
+                - name: update apt cache
+                  apt: update_cache=yes
+
+              tasks:
+                - name: install lynx
+                  apt: name=lynx state=latest
+
+              post_tasks:
+                - name: update apt cache
+                  apt: update_cache=yes
+
+      section.emphatic-text(data-bespoke-backdrop='emphatic')
+        h2 Version Control System
+        h3 (VCS)
+
+      section.emphatic-image(data-bespoke-backdrop='emphatic')
+        <img class="full" src="images/git-model.png" />
+
+      section.emphatic-text(data-bespoke-backdrop='emphatic')
+        h2 Git for versioning
+        <a href="http://rogerdudler.github.io/git-guide/">http://rogerdudler.github.io/git-guide/</a>
+        <a href="http://rogerdudler.github.io/git-guide/files/git_cheat_sheet.pdf">http://rogerdudler.github.io/git-guide/files/git_cheat_sheet.pdf</a>
+
+        Our git repository
+        <a href="https://github.com/ilbonzo/Rocannon">https://github.com/ilbonzo/Rocannon</a>
+
 
       section.emphatic-text(data-bespoke-backdrop='emphatic')
         h3 fonti
