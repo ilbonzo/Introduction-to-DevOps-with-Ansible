@@ -237,6 +237,19 @@ document_root: /var/www/officina-linux.it
         <h2>Ansible Galaxy</h2>
       </section>
       <section data-bespoke-backdrop="emphatic" class="emphatic-image"><img class="full" src="images/ansible-galaxy.png" /></section>
+      <section data-bespoke-backdrop="emphatic" class="emphatic-text"><img style="width: 60%" src="images/minecraft.svg" /></section>
+      <section data-bespoke-backdrop="emphatic" class="emphatic-text">
+        <h3>Galaxy role</h3><a href="https://github.com/ilbonzo/ansible-minecraft">github.com/ilbonzo/ansible-minecraft</a>
+      </section>
+      <section data-bespoke-backdrop="emphatic" class="emphatic-image"><img class="full" src="images/vagrant-ansible-minecraft.png" /></section>
+      <section data-bespoke-backdrop="emphatic" class="emphatic-image"><img class="full" src="images/vagrant-ansible-minecraft-2.png" /></section>
+      <section data-bespoke-backdrop="emphatic" class="emphatic-image"><img style="width:80%" src="images/virtual-box.png" /></section>
+      <section data-bespoke-backdrop="emphatic" class="emphatic-image"><img class="full" src="images/minecraft-1.png" /></section>
+      <section data-bespoke-backdrop="emphatic" class="emphatic-image"><img class="full" src="images/minecraft-2.png" /></section>
+      <section data-bespoke-backdrop="emphatic" class="emphatic-text"><iframe width="560" height="315" src="https://www.youtube.com/embed/ICAlhy4EI44" frameborder="0" allowfullscreen></iframe><br><a href="https://youtu.be/ICAlhy4EI44">https://youtu.be/ICAlhy4EI44</a></section>
+      <section data-bespoke-backdrop="emphatic" class="emphatic-text">
+        <h3>Iniziamo a provare</h3>
+      </section>
       <section data-bespoke-backdrop="emphatic" class="emphatic-text">
         <h3>Virtualizzare può essere d'aiuto per sperimentare e non solo</h3>
       </section>
@@ -267,16 +280,125 @@ document_root: /var/www/officina-linux.it
           </li>
         </ul>
       </section>
-      <section data-bespoke-backdrop="emphatic" class="emphatic-text"><img style="width: 60%" src="images/minecraft.svg" /></section>
       <section data-bespoke-backdrop="emphatic" class="emphatic-text">
-        <h3>Galaxy role</h3><a href="https://github.com/ilbonzo/ansible-minecraft">github.com/ilbonzo/ansible-minecraft</a>
+        <h2>commands</h2>
+        <ul>
+          <li>
+            <h4>$ vagrant init</h4>
+          </li>
+          <li>
+            <h4>$ vagrant up</h4>
+          </li>
+          <li>
+            <h4>$ vagrant halt</h4>
+          </li>
+          <li>
+            <h4>$ vagrant reload</h4>
+          </li>
+        </ul>
       </section>
-      <section data-bespoke-backdrop="emphatic" class="emphatic-image"><img class="full" src="images/vagrant-ansible-minecraft.png" /></section>
-      <section data-bespoke-backdrop="emphatic" class="emphatic-image"><img class="full" src="images/vagrant-ansible-minecraft-2.png" /></section>
-      <section data-bespoke-backdrop="emphatic" class="emphatic-image"><img style="width:80%" src="images/virtual-box.png" /></section>
-      <section data-bespoke-backdrop="emphatic" class="emphatic-image"><img class="full" src="images/minecraft-1.png" /></section>
-      <section data-bespoke-backdrop="emphatic" class="emphatic-image"><img class="full" src="images/minecraft-2.png" /></section>
-      <section data-bespoke-backdrop="emphatic" class="emphatic-text"><iframe width="560" height="315" src="https://www.youtube.com/embed/ICAlhy4EI44" frameborder="0" allowfullscreen></iframe><br><a href="https://youtu.be/ICAlhy4EI44">https://youtu.be/ICAlhy4EI44</a></section>
+      <section data-bespoke-backdrop="emphatic" class="emphatic-text">
+        <h3>Vagrantfile</h3>
+        <pre><code class="language-yaml">Vagrant.configure("2") do |config|
+  config.vm.box = "base"
+end
+</code></pre>
+      </section>
+      <section data-bespoke-backdrop="emphatic" class="emphatic-text">
+        <h2>Vagrant Box</h2>
+        <p><a href="https://www.vagrantup.com/intro/getting-started/boxes.html">https://www.vagrantup.com/intro/getting-started/boxes.html</a></p>
+      </section>
+      <section data-bespoke-backdrop="emphatic" class="emphatic-text">
+        <h3>Vagrant Box</h3>
+        <pre><code class="language-yaml">Vagrant.configure("2") do |config|
+  config.vm.box = "debian/jessie64"
+end
+</code></pre>
+      </section>
+      <section data-bespoke-backdrop="emphatic" class="emphatic-text">
+        <h3>Vagrant Networking</h3>
+        <pre><code class="language-yaml">config.vm.hostname = "rocannon"
+config.vm.network :forwarded_port, guest: 80, host: 8080
+config.vm.network "private_network", ip: "192.168.33.66"
+</code></pre>
+      </section>
+      <section data-bespoke-backdrop="emphatic" class="emphatic-text">
+        <h3>Vagrant ssh login</h3>
+        <pre><code class="language-yaml">$ vagrant ssh
+</code></pre>
+      </section>
+      <section data-bespoke-backdrop="emphatic" class="emphatic-text">
+        <h3>Attivare ssh "normale"</h3>
+        <p><em>config.ssh.forward_agent</em></p>
+        <p><em>If true, agent forwarding over SSH connections is enabled. Defaults to false.</em></p>
+        <pre><code class="language-yaml">config.ssh.forward_agent = true
+</code></pre>
+      </section>
+      <section data-bespoke-backdrop="emphatic" class="emphatic-text">
+        <h3>Debian login ssh con password</h3>
+        <p><em><strong>$ sudo vi /etc/ssh/sshd_config</strong></em></p>
+        <pre><code class="language-yaml">PasswordAuthentication yes</code></pre>
+        <p><em><strong>$ sudo service ssh restart</strong></em></p>
+        <p>ora possiamo entrare nella macchina in ssh "classico"</p>
+        <p><em><strong>ssh vagrant@192.168.33.66</strong></em></p>
+      </section>
+      <section data-bespoke-backdrop="emphatic" class="emphatic-text">
+        <h2>Provider configuration</h2>
+        <h3>Virtualbox</h3>
+        <pre><code class="language-yaml">config.vm.provider "virtualbox" do |v|
+  v.name = "rocannon-debian"
+  v.memory = 512
+  v.cpus = 2
+end
+</code></pre>
+      </section>
+      <section data-bespoke-backdrop="emphatic" class="emphatic-text">
+        <h2>Provisioning</h2>
+        <h3>Ansible</h3>
+        <pre><code class="language-yaml">config.vm.provision "shell",
+  inline: "sudo apt-get -y update && sudo apt-get -y install lynx"
+  </code></pre>
+      </section>
+      <section data-bespoke-backdrop="emphatic" class="emphatic-text">
+        <h2>Provisioning</h2>
+        <h3>Ansible</h3>
+        <pre><code class="language-yaml">config.vm.provision :ansible do |ansible|
+  ansible.groups = {
+    "development" => ["default"],
+    "all_groups:children" => ["development"]
+    
+  }
+  ansible.playbook = "ansible/playbook.yml"
+end
+</code></pre>
+      </section>
+      <section data-bespoke-backdrop="emphatic" class="emphatic-text">
+        <h2>First playbook</h2>
+        <pre><code class="language-yaml">- hosts: all
+  become: true
+  pre_tasks:
+    - name: update apt cache
+      apt: update_cache=yes
+      
+  tasks:
+    - name: install lynx
+      apt: name=lynx state=latest
+      
+  post_tasks:
+    - name: update apt cache
+      apt: update_cache=yes
+      </code></pre>
+      </section>
+      <section data-bespoke-backdrop="emphatic" class="emphatic-text">
+        <h2>Version Control System</h2>
+        <h3>(VCS)</h3>
+      </section>
+      <section data-bespoke-backdrop="emphatic" class="emphatic-image"><img class="full" src="images/git-model.png" /></section>
+      <section data-bespoke-backdrop="emphatic" class="emphatic-text">
+        <h2>Git for versioning</h2><a href="http://rogerdudler.github.io/git-guide/">http://rogerdudler.github.io/git-guide/</a>
+        <a href="http://rogerdudler.github.io/git-guide/files/git_cheat_sheet.pdf">http://rogerdudler.github.io/git-guide/files/git_cheat_sheet.pdf</a>
+        <Our>git repository</Our><a href="https://github.com/ilbonzo/Rocannon">https://github.com/ilbonzo/Rocannon</a>
+      </section>
       <section data-bespoke-backdrop="emphatic" class="emphatic-text">
         <h3>fonti</h3>
         <ul>
