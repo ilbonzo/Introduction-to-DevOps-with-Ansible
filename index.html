@@ -295,6 +295,9 @@ document_root: /var/www/officina-linux.it
           <li>
             <h4>$ vagrant reload</h4>
           </li>
+          <li>
+            <h4>$ vagrant destroy</h4>
+          </li>
         </ul>
       </section>
       <section data-bespoke-backdrop="emphatic" class="emphatic-text">
@@ -307,6 +310,12 @@ end
       <section data-bespoke-backdrop="emphatic" class="emphatic-text">
         <h2>Vagrant Box</h2>
         <p><a href="https://www.vagrantup.com/intro/getting-started/boxes.html">https://www.vagrantup.com/intro/getting-started/boxes.html</a></p>
+      </section>
+      <section data-bespoke-backdrop="emphatic" class="emphatic-text">
+        <h2>Vagrant Box</h2>
+        <pre><code class="language-yaml">$ vagrant box list
+$ vagrant box add debian/jessie64
+</code></pre>
       </section>
       <section data-bespoke-backdrop="emphatic" class="emphatic-text">
         <h3>Vagrant Box</h3>
@@ -360,6 +369,15 @@ end
   </code></pre>
       </section>
       <section data-bespoke-backdrop="emphatic" class="emphatic-text">
+        <h2>Run provisioning with vagrant</h2>
+        <pre><code class="language-yaml">$ vagrant up #first time when create a machines
+
+$ vagrant up --provision
+
+$ vagrant provision
+</code></pre>
+      </section>
+      <section data-bespoke-backdrop="emphatic" class="emphatic-text">
         <h2>Provisioning</h2>
         <h3>Ansible</h3>
         <pre><code class="language-yaml">config.vm.provision :ansible do |ansible|
@@ -378,16 +396,36 @@ end
   become: true
   pre_tasks:
     - name: update apt cache
-      apt: update_cache=yes
+      command: apt-get -y update
       
   tasks:
     - name: install lynx
-      apt: name=lynx state=latest
+      command: apt-get install -y lynx
       
   post_tasks:
-    - name: update apt cache
-      apt: update_cache=yes
+    - name: hostname
+      command: hostname
       </code></pre>
+      </section>
+      <section data-bespoke-backdrop="emphatic" class="emphatic-text">
+        <h2>Provisioning</h2>
+        <h3>with Ansible on windows</h3>
+        <pre><code class="language-yaml">## if you don't want ansible on host
+config.vm.provision :shell, :path => "ansible/provision.sh"
+</code></pre>
+      </section>
+      <section data-bespoke-backdrop="emphatic" class="emphatic-text">
+        <h2>Provisioning</h2>
+        <h3>Ansible on windows</h3>
+        <pre><code class="language-yaml">#!/bin/bash
+sudo apt-get update
+sudo apt-get install -y python-pip python-dev python-pycurl
+sudo pip install ansible
+sudo mkdir -p /etc/ansible
+printf '[vagrant]\nlocalhost\n' | sudo tee /etc/ansible/hosts > /dev/null
+echo Running provisioner: ansible
+PYTHONUNBUFFERED=1 ansible-playbook -c local /workspace/tools/ansible/playbook.yml
+</code></pre>
       </section>
       <section data-bespoke-backdrop="emphatic" class="emphatic-text">
         <h2>Version Control System</h2>
@@ -397,8 +435,126 @@ end
       <section data-bespoke-backdrop="emphatic" class="emphatic-text">
         <h2>Git for versioning</h2><a href="http://rogerdudler.github.io/git-guide/">http://rogerdudler.github.io/git-guide/</a>
         <a href="http://rogerdudler.github.io/git-guide/files/git_cheat_sheet.pdf">http://rogerdudler.github.io/git-guide/files/git_cheat_sheet.pdf</a>
-        <Our>git repository</Our><a href="https://github.com/ilbonzo/Rocannon">https://github.com/ilbonzo/Rocannon</a>
+        <p>Our git repository</p><a href="https://github.com/ilbonzo/Rocannon">https://github.com/ilbonzo/Rocannon</a>
       </section>
+      <section data-bespoke-backdrop="emphatic" class="emphatic-text">
+        <h2>Inventory</h2>
+        <ul>
+          <li>static inventory</li>
+          <li>dynamic inventory</li>
+        </ul>
+      </section>
+      <section data-bespoke-backdrop="emphatic" class="emphatic-text">
+        <h2>Static Inventory</h2>
+        <pre><code class="language-yaml">[databases]
+stp.ilbonzo.net     ansible_user=scott
+
+[webservers]
+aic.ilbonzo.net     ansible_user=layne
+</code></pre>
+      </section>
+      <section data-bespoke-backdrop="emphatic" class="emphatic-text">
+        <h2>Inventory list</h2>
+        <pre><code class="language-yaml">$ ansible --list-hosts web
+  hosts (1):
+    ilbonzo.net</code></pre>
+        <pre><code class="language-yaml"># linux
+$ /etc/ansible/hosts
+# osx
+$ /usr/local/etc/ansible/hosts
+</code></pre>
+      </section>
+      <section data-bespoke-backdrop="emphatic" class="emphatic-text">
+        <h2>Local inventory</h2>
+        <pre><code class="language-yaml">$ ansible -i hosts --list-hosts all
+  hosts (4):
+    web01
+    web02
+    db01
+    db02
+    </code></pre>
+      </section>
+      <section data-bespoke-backdrop="emphatic" class="emphatic-text">
+        <h2>Subset</h2>
+        <pre><code class="language-yaml">$ ansible -i hosts --list-hosts webserver
+  hosts (4):
+    web01
+    web02
+    
+$ ansible -i hosts --list-hosts webserver:dbserver
+  hosts (4):
+    web01
+    web02
+    db01
+    db02
+    </code></pre>
+      </section>
+      <section data-bespoke-backdrop="emphatic" class="emphatic-text">
+        <h2>Local inventory</h2>
+        <pre><code class="language-yaml">ansible_user=vagrant
+ansible_port=2606
+ansible_ssh_private_key_file=~/.ssh/id_rsa
+</code></pre>
+      </section>
+      <section data-bespoke-backdrop="emphatic" class="emphatic-text">
+        <h2>Vagrant local inventory</h2>
+        <pre><code class="language-yaml"># Generated by Vagrant
+default ansible_ssh_host=127.0.0.1
+  ansible_ssh_port=2222
+  ansible_ssh_user='vagrant'
+  ansible_ssh_private_key_file=
+    '~/.vagrant/machines/default/virtualbox/private_key'
+    
+[development]
+default
+
+[all_groups:children]
+development
+</code></pre>
+      </section>
+      <section data-bespoke-backdrop="emphatic" class="emphatic-text">
+        <h2>Running command</h2>
+        <pre><code class="language-yaml">$ ansible -i ansible/hosts -m ping all -k
+    SSH password:
+    192.168.33.66 | SUCCESS => {
+        "changed": false,
+        "ping": "pong"
+    }
+    
+$ ansible -i ansible/hosts -m command -a "hostname" all -k
+    SSH password:
+    192.168.33.66 | SUCCESS | rc=0 >>
+    rocannon
+    
+$ ansible -i ansible/hosts -a "hostname" all -k
+    SSH password:
+    192.168.33.66 | SUCCESS | rc=0 >>
+    rocannon
+    </code></pre>
+      </section>
+      <section data-bespoke-backdrop="emphatic" class="emphatic-text">
+        <h3>Vagrantfile</h3>
+        <pre><code class="language-yaml">config.vm.provision :ansible do |ansible|
+  ansible.groups = {
+    "development" => ["default"],
+    "all_groups:children" => ["development"]
+    
+  }
+  ansible.playbook = "ansible/playbook.yml"
+end
+</code></pre>
+      </section>
+      <section data-bespoke-backdrop="emphatic" class="emphatic-text">
+        <h2>Playbook</h2>
+        <pre><code class="language-yaml">---
+- hosts: all
+  tasks:
+    - name: install lynx
+      command: apt-get install -y linux
+    - command: hostname
+    </code></pre>
+      </section>
+      <section data-bespoke-backdrop="emphatic" class="emphatic-image"><img class="full" src="images/playbook-output.png" /></section>
       <section data-bespoke-backdrop="emphatic" class="emphatic-text">
         <h3>fonti</h3>
         <ul>
