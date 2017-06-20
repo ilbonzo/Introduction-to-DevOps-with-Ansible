@@ -413,6 +413,14 @@ html
               $ vagrant ssh
 
       section.emphatic-text(data-bespoke-backdrop='emphatic')
+        h3 Testing port forwarding
+        pre
+          code.language-yaml.
+              $ vagrant ssh
+              $ echo pippo42 > index.html
+              $ sudo python -m SimpleHTTPServer 80
+
+      section.emphatic-text(data-bespoke-backdrop='emphatic')
         h3 Attivare ssh "normale"
         p
           em config.ssh.forward_agent
@@ -665,6 +673,146 @@ html
 
       section.emphatic-image(data-bespoke-backdrop='emphatic')
         <img class="full" src="images/playbook-output.png" />
+
+      section.emphatic-text(data-bespoke-backdrop='emphatic')
+        h2 Running playbook
+        pre
+          code.language-yaml.
+            $ ansible-playbook ansible/playbook.yml -i hosts --ask-sudo-pass --ask-pass
+
+      section.emphatic-text(data-bespoke-backdrop='emphatic')
+        h2 Modules
+        p
+          em Modules (also referred to as “task plugins” or “library plugins”) are the ones that do the actual work in ansible, they are what gets executed in each playbook task. But you can also run a single one using the ‘ansible’ command.
+        <a href="http://docs.ansible.com/ansible/modules_by_category.html">http://docs.ansible.com/ansible/modules_by_category.html</a>
+
+      section.emphatic-text(data-bespoke-backdrop='emphatic')
+        h2 Packaging: apt
+        p
+          em Manages apt packages (such as for Debian/Ubuntu).
+        <a href="http://docs.ansible.com/ansible/apt_module.html">http://docs.ansible.com/ansible/apt_module.html</a>
+
+      section.emphatic-text(data-bespoke-backdrop='emphatic')
+        h2 module apt
+        pre
+          code.language-yaml.
+            pre_tasks:
+              - name: update apt cache
+                apt: update_cache=yes
+
+            tasks:
+              - name: install lynx
+                apt: name=lynx state=latest
+
+      section.emphatic-text(data-bespoke-backdrop='emphatic')
+        h2 apt
+        pre
+          code.language-yaml.
+            tasks:
+              - name: install apache2
+                apt: name=apache2 state=latest update_cache=yes
+
+      section.emphatic-text(data-bespoke-backdrop='emphatic')
+        h2 become
+        h3 privilege escalation
+        p
+          em Ansible allows you to ‘become’ another user, different from the user that logged into the machine (remote user). This is done using existing privilege escalation tools, which you probably already use or have configured, like sudo, su, pfexec, doas, pbrun, dzdo, ksu and others.
+        <a href="http://docs.ansible.com/ansible/become.html">http://docs.ansible.com/ansible/become.html</a>
+
+      section.emphatic-text(data-bespoke-backdrop='emphatic')
+        h2 become
+        pre
+          code.language-yaml.
+            tasks:
+              - name: Run a command as the apache user
+                command: somecommand
+                become: true
+                become_user: apache
+
+      section.emphatic-text(data-bespoke-backdrop='emphatic')
+        h2 Loops
+        <a href="http://docs.ansible.com/ansible/playbooks_loops.html">http://docs.ansible.com/ansible/playbooks_loops.html</a>
+        pre
+          code.language-yaml.
+            tasks:
+              - name: install lynx
+                apt: name=lynx state=latest
+              - name: install vim
+                apt: name=vim state=latest
+
+      section.emphatic-text(data-bespoke-backdrop='emphatic')
+        h2 Loops
+        <a href="http://docs.ansible.com/ansible/playbooks_loops.html">http://docs.ansible.com/ansible/playbooks_loops.html</a>
+        pre
+          code.language-yaml.
+            tasks:
+              - name: install packages
+                apt: name={{ item }} state=latest
+                with_items:
+                - lynx
+                - vim
+
+      section.emphatic-text(data-bespoke-backdrop='emphatic')
+        h2 Jinja2
+        h3 Templating
+        <a href="http://docs.ansible.com/ansible/playbooks_templating.html">http://docs.ansible.com/ansible/playbooks_templating.html</a>
+        pre
+          code.language-yaml.
+            - name: touch files with an optional mode
+              file: dest={{item.path}} state=touch mode={{item.mode|default(omit)}}
+              with_items:
+                - path: /tmp/foo
+                - path: /tmp/bar
+                - path: /tmp/baz
+                  mode: "0444"
+
+      section.emphatic-text(data-bespoke-backdrop='emphatic')
+        h2 Service
+        p
+          em Controls services on remote hosts. Supported init systems include BSD init, OpenRC, SysV, Solaris SMF, systemd, upstart.
+        <a href="http://docs.ansible.com/ansible/service_module.html">http://docs.ansible.com/ansible/service_module.html</a>
+
+      section.emphatic-text(data-bespoke-backdrop='emphatic')
+        h2 Service
+        pre
+          code.language-yaml.
+            - name: install apache2
+              apt: name=apache2 state=latest update_cache=yes
+            - name: apache2 is running
+              service: name=apache2 state=started enabled=yes
+
+      section.emphatic-text(data-bespoke-backdrop='emphatic')
+        h2 Include Statements
+        p
+          em "single responsibility principle"
+        pre
+          code.language-yaml.
+            - include: webserver.yml
+
+      section.emphatic-text(data-bespoke-backdrop='emphatic')
+        h2 Handlers
+        p
+          em Handlers are lists of tasks, not really any different from regular tasks, that are referenced by a globally unique name, and are notified by notifiers. If nothing notifies a handler, it will not run. Regardless of how many tasks notify a handler, it will run only once, after all of the tasks complete in a particular play.
+        pre
+          code.language-yaml.
+            - handlers:
+              - name: restart apache2
+                service: name=apache2 state=restarted
+
+      section.emphatic-text(data-bespoke-backdrop='emphatic')
+        h2 Notify to Handlers
+        pre
+          code.language-yaml.
+            - name: check mod rewrite
+              apache2_module:
+                state: present
+                name: rewrite
+              notify:
+              - restart apache2
+
+
+      section.emphatic-text(data-bespoke-backdrop='emphatic')
+        h2 end
 
       section.emphatic-text(data-bespoke-backdrop='emphatic')
         h3 fonti
