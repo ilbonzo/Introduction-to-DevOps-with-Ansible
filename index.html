@@ -672,8 +672,167 @@ tasks:
     name: rewrite
   notify:
   - restart apache2
-  
   </code></pre>
+      </section>
+      <section data-bespoke-backdrop="emphatic" class="emphatic-text">
+        <h2>Demo App</h2>
+        <h3>Flask framework</h3><a href="http://flask.pocoo.org/">http://flask.pocoo.org/</a>
+      </section>
+      <section data-bespoke-backdrop="emphatic" class="emphatic-text">
+        <h2>webserver.yml</h2>
+        <pre><code class="language-yaml">---
+- hosts: all
+  become: true
+  tasks:
+  
+    - name: install apache2 and other components
+      apt: name={{ item }} state=present update_cache=yes
+      with_items:
+        - apache2
+        - libapache2-mod-wsgi
+        - python-pip
+        - python-virtualenv
+        
+    - name: ensure apache is started
+      service: name=apache2 state=started enabled=yes
+      
+    - name: ensure mod_wsgi enabled
+      apache2_module: state=present name=wsgi
+      notify: restart apache2
+      
+  handlers:
+    - name: restart apache2
+      service: name=apache2 state=restarted
+      </code></pre>
+      </section>
+      <section data-bespoke-backdrop="emphatic" class="emphatic-text">
+        <h2>Copy modules</h2>
+        <p>source copied from control machine to server</p><a href="https://docs.ansible.com/ansible/copy_module.html">https://docs.ansible.com/ansible/copy_module.html</a>
+        <pre><code class="language-yaml">- name: copy demo app source
+  copy: src=../demo/app/ dest=/var/www/demo mode=755
+  notify: restart apache2
+  </code></pre>
+      </section>
+      <section data-bespoke-backdrop="emphatic" class="emphatic-text">
+        <h2>Copy modules</h2>
+        <p>apache virtual hosts</p>
+        <pre><code class="language-yaml">- name: copy virtual host config
+  copy: src=../demo/demo.conf dest=/etc/apache2/sites-available mode=755
+  notify: restart apache2
+  </code></pre>
+      </section>
+      <section data-bespoke-backdrop="emphatic" class="emphatic-text">
+        <h2>Pip modules</h2>
+        <pre><code class="language-yaml">- name: setup python virtualenv
+  pip:
+    requirements=/var/www/demo/requirements.txt
+    virtualenv=/var/www/demo/.venv
+  notify: restart apache2
+  </code></pre>
+      </section>
+      <section data-bespoke-backdrop="emphatic" class="emphatic-text">
+        <h2>Handlers</h2>
+        <pre><code class="language-yaml">RUNNING HANDLER [restart apache2] ******************
+changed: [default]
+</code></pre>
+      </section>
+      <section data-bespoke-backdrop="emphatic" class="emphatic-text">
+        <h2>Flush Handlers</h2>
+        <pre><code class="language-yaml">- meta: flush_handlers
+</code></pre>
+      </section>
+      <section data-bespoke-backdrop="emphatic" class="emphatic-text">
+        <h2>Files module</h2>
+        <h3>symlink</h3><a href="https://docs.ansible.com/ansible/file_module.html">https://docs.ansible.com/ansible/file_module.html</a>
+        <pre><code class="language-yaml">- name: de-activate default apache site
+  file: path=/etc/apache2/sites-enabled/000-default.conf state=absent
+  notify: restart apache2
+- name: activate demo apache site
+  file:
+    src=/etc/apache2/sites-available/demo.conf
+    dest=/etc/apache2/sites-enabled/demo.conf
+    state=link
+  notify: restart apache2
+  </code></pre>
+      </section>
+      <section data-bespoke-backdrop="emphatic" class="emphatic-text">
+        <h2>View demo app</h2><a href="http://localhost:4444">http://localhost:4444/</a>
+      </section>
+      <section data-bespoke-backdrop="emphatic" class="emphatic-text">
+        <h2>MySql db module</h2><a href="https://docs.ansible.com/ansible/mysql_db_module.html">https://docs.ansible.com/ansible/mysql_db_module.html</a>
+      </section>
+      <section data-bespoke-backdrop="emphatic" class="emphatic-text">
+        <h2>MySql user module</h2><a href="https://docs.ansible.com/ansible/mysql_user_module.html">https://docs.ansible.com/ansible/mysql_user_module.html</a>
+      </section>
+      <section data-bespoke-backdrop="emphatic" class="emphatic-text">
+        <h2>database.yml</h2>
+        <pre><code class="language-yaml">---
+- hosts: all
+  become: true
+  tasks:
+  - name: install tools
+    apt: name={{ item }} state=present update_cache=yes
+    with_items:
+      - python-mysqldb
+      </code></pre>
+      </section>
+      <section data-bespoke-backdrop="emphatic" class="emphatic-text">
+        <h2>database.yml</h2>
+        <pre><code class="language-yaml">---
+- hosts: all
+  become: true
+  tasks:
+  
+    - name: install mysql-server
+      apt:
+        name=mysql-server
+        state=present
+        update_cache=yes
+        
+    - name: ensure mysql is started
+      service:
+        name=mysql
+        state=started
+        enabled=yes
+        
+  handlers:
+    - name: restart mysql
+      service: name=mysql state=restarted
+      </code></pre>
+      </section>
+      <section data-bespoke-backdrop="emphatic" class="emphatic-text">
+        <h2>line in line module</h2>
+        <pre><code class="language-yaml">- name: ensure mysql listen on all ports
+  lineinfile:
+    dest=/etc/mysql/my.cnf
+    regexp=^bind-address
+    line="bind-address = 0.0.0.0"
+  notify: restart mysql
+  </code></pre>
+      </section>
+      <section data-bespoke-backdrop="emphatic" class="emphatic-text">
+        <h2>Mysql create db</h2>
+        <pre><code class="language-yaml">- name: create demo database
+  mysql_db: name=demo state=present
+  </code></pre>
+      </section>
+      <section data-bespoke-backdrop="emphatic" class="emphatic-text">
+        <h2>Mysql create user</h2>
+        <pre><code class="language-yaml">- name: create demo user
+  mysql_user:
+    name=demo
+    password=demo
+    priv=demo.*:ALL host='%'
+    state=present
+    </code></pre>
+      </section>
+      <section data-bespoke-backdrop="emphatic" class="emphatic-text">
+        <h2>View demo app db</h2><a href="http://localhost:4444/db">http://localhost:4444/db</a>
+      </section>
+      <section data-bespoke-backdrop="emphatic" class="emphatic-text">
+        <h2>Db down</h2>
+        <pre><code class="language-yaml">$ sudo service mysql stop
+</code></pre>
       </section>
       <section data-bespoke-backdrop="emphatic" class="emphatic-text">
         <h2>end</h2>
