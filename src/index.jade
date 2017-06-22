@@ -810,6 +810,185 @@ html
               notify:
               - restart apache2
 
+      section.emphatic-text(data-bespoke-backdrop='emphatic')
+        h2 Demo App
+        h3 Flask framework
+        <a href="http://flask.pocoo.org/">http://flask.pocoo.org/</a>
+
+      section.emphatic-text(data-bespoke-backdrop='emphatic')
+        h2 webserver.yml
+        pre
+          code.language-yaml.
+            ---
+            - hosts: all
+              become: true
+              tasks:
+
+                - name: install apache2 and other components
+                  apt: name={{ item }} state=present update_cache=yes
+                  with_items:
+                    - apache2
+                    - libapache2-mod-wsgi
+                    - python-pip
+                    - python-virtualenv
+
+                - name: ensure apache is started
+                  service: name=apache2 state=started enabled=yes
+
+                - name: ensure mod_wsgi enabled
+                  apache2_module: state=present name=wsgi
+                  notify: restart apache2
+
+              handlers:
+                - name: restart apache2
+                  service: name=apache2 state=restarted
+
+      section.emphatic-text(data-bespoke-backdrop='emphatic')
+        h2 Copy modules
+        p source copied from control machine to server
+        <a href="https://docs.ansible.com/ansible/copy_module.html">https://docs.ansible.com/ansible/copy_module.html</a>
+        pre
+          code.language-yaml.
+            - name: copy demo app source
+              copy: src=../demo/app/ dest=/var/www/demo mode=755
+              notify: restart apache2
+
+      section.emphatic-text(data-bespoke-backdrop='emphatic')
+        h2 Copy modules
+        p apache virtual hosts
+        pre
+          code.language-yaml.
+            - name: copy virtual host config
+              copy: src=../demo/demo.conf dest=/etc/apache2/sites-available mode=755
+              notify: restart apache2
+
+      section.emphatic-text(data-bespoke-backdrop='emphatic')
+        h2 Pip modules
+        pre
+          code.language-yaml.
+            - name: setup python virtualenv
+              pip:
+                requirements=/var/www/demo/requirements.txt
+                virtualenv=/var/www/demo/.venv
+              notify: restart apache2
+
+      section.emphatic-text(data-bespoke-backdrop='emphatic')
+        h2 Handlers
+        pre
+          code.language-yaml.
+            RUNNING HANDLER [restart apache2] ******************
+            changed: [default]
+
+      section.emphatic-text(data-bespoke-backdrop='emphatic')
+        h2 Flush Handlers
+        pre
+          code.language-yaml.
+            - meta: flush_handlers
+
+      section.emphatic-text(data-bespoke-backdrop='emphatic')
+        h2 Files module
+        h3 symlink
+        <a href="https://docs.ansible.com/ansible/file_module.html">https://docs.ansible.com/ansible/file_module.html</a>
+        pre
+          code.language-yaml.
+            - name: de-activate default apache site
+              file: path=/etc/apache2/sites-enabled/000-default.conf state=absent
+              notify: restart apache2
+            - name: activate demo apache site
+              file:
+                src=/etc/apache2/sites-available/demo.conf
+                dest=/etc/apache2/sites-enabled/demo.conf
+                state=link
+              notify: restart apache2
+
+      section.emphatic-text(data-bespoke-backdrop='emphatic')
+        h2 View demo app
+        <a href="http://localhost:4444">http://localhost:4444/</a>
+
+      section.emphatic-text(data-bespoke-backdrop='emphatic')
+        h2 MySql db module
+        <a href="https://docs.ansible.com/ansible/mysql_db_module.html">https://docs.ansible.com/ansible/mysql_db_module.html</a>
+
+      section.emphatic-text(data-bespoke-backdrop='emphatic')
+        h2 MySql user module
+        <a href="https://docs.ansible.com/ansible/mysql_user_module.html">https://docs.ansible.com/ansible/mysql_user_module.html</a>
+
+      section.emphatic-text(data-bespoke-backdrop='emphatic')
+        h2 database.yml
+        pre
+          code.language-yaml.
+            ---
+            - hosts: all
+              become: true
+              tasks:
+              - name: install tools
+                apt: name={{ item }} state=present update_cache=yes
+                with_items:
+                  - python-mysqldb
+
+      section.emphatic-text(data-bespoke-backdrop='emphatic')
+        h2 database.yml
+        pre
+          code.language-yaml.
+            ---
+            - hosts: all
+              become: true
+              tasks:
+
+                - name: install mysql-server
+                  apt:
+                    name=mysql-server
+                    state=present
+                    update_cache=yes
+
+                - name: ensure mysql is started
+                  service:
+                    name=mysql
+                    state=started
+                    enabled=yes
+
+              handlers:
+                - name: restart mysql
+                  service: name=mysql state=restarted
+
+      section.emphatic-text(data-bespoke-backdrop='emphatic')
+        h2 line in line module
+        pre
+          code.language-yaml.
+            - name: ensure mysql listen on all ports
+              lineinfile:
+                dest=/etc/mysql/my.cnf
+                regexp=^bind-address
+                line="bind-address = 0.0.0.0"
+              notify: restart mysql
+
+      section.emphatic-text(data-bespoke-backdrop='emphatic')
+        h2 Mysql create db
+        pre
+          code.language-yaml.
+            - name: create demo database
+              mysql_db: name=demo state=present
+
+      section.emphatic-text(data-bespoke-backdrop='emphatic')
+        h2 Mysql create user
+        pre
+          code.language-yaml.
+            - name: create demo user
+              mysql_user:
+                name=demo
+                password=demo
+                priv=demo.*:ALL host='%'
+                state=present
+
+      section.emphatic-text(data-bespoke-backdrop='emphatic')
+        h2 View demo app db
+        <a href="http://localhost:4444/db">http://localhost:4444/db</a>
+
+      section.emphatic-text(data-bespoke-backdrop='emphatic')
+        h2 Db down
+        pre
+          code.language-yaml.
+            $ sudo service mysql stop
 
       section.emphatic-text(data-bespoke-backdrop='emphatic')
         h2 end
