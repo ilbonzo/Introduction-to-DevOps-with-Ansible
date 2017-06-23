@@ -1029,9 +1029,76 @@ end
       </section>
       <section data-bespoke-backdrop="emphatic" class="emphatic-text">
         <h2>Roles</h2>
+        <h3>reuse the code</h3>
       </section>
       <section data-bespoke-backdrop="emphatic" class="emphatic-text">
-        <h2>Variables</h2>
+        <h3>init role</h3>
+        <pre><code class="language-yaml">╰─➤  ansible-galaxy init apache
+    - apache was created successfully
+    </code></pre>
+      </section>
+      <section data-bespoke-backdrop="emphatic" class="emphatic-text">
+        <h2>Roles</h2>
+        <pre><code class="language-yaml">╰─➤  ls -l apache
+  total 0
+  drwxr-xr-x  10 bonzo  staff  340 Dec  6 10:45 files
+  drwxr-xr-x  10 bonzo  staff  340 Dec  6 10:45 handlers
+  drwxr-xr-x  10 bonzo  staff  340 Dec  6 10:45 tasks
+  drwxr-xr-x   5 bonzo  staff  170 Dec  6 10:45 templates
+  </code></pre>
+      </section>
+      <section data-bespoke-backdrop="emphatic" class="emphatic-text">
+        <h3>main.yml - default file</h3>
+        <pre><code class="language-yaml">╰─➤  ls apache/tasks
+     main.yml
+     </code></pre>
+      </section>
+      <section data-bespoke-backdrop="emphatic" class="emphatic-text">
+        <h2>Converting file to role</h2>
+        <h3>copy task from webserver file to main.yml</h3>
+      </section>
+      <section data-bespoke-backdrop="emphatic" class="emphatic-text">
+        <h2>Converting file to role</h2>
+        <h3>webserver.yml
+          <pre></pre><code class="language-yaml">
+            ---
+            - hosts: webserver
+              become: true
+              roles:
+                - apache
+                </code>
+        </h3>
+      </section>
+      <section data-bespoke-backdrop="emphatic" class="emphatic-text">
+        <h2>site.yml</h2>
+        <p>pleybook with include of other playbook</p>
+      </section>
+      <section data-bespoke-backdrop="emphatic" class="emphatic-text">
+        <h2>Variables facts
+          <pre></pre><code class="language-yaml">
+            $ ansible -m setup db
+            </code>
+        </h2>
+      </section>
+      <section data-bespoke-backdrop="emphatic" class="emphatic-text">
+        <h2>Variables default</h2>
+        <p>defaults/main.yml
+          <pre></pre><code class="language-yaml">
+            db_user: demo
+            db_name: demo
+            db_password: demo
+            </code>
+        </p>
+      </section>
+      <section data-bespoke-backdrop="emphatic" class="emphatic-text">
+        <h2>Variables vars</h2>
+        <p>group_vars/database
+          <pre></pre><code class="language-yaml">
+            db_user: demo
+            db_name: demo
+            db_password: demo
+            </code>
+        </p>
       </section>
       <section data-bespoke-backdrop="emphatic" class="emphatic-text">
         <h2>end</h2>
