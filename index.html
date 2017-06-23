@@ -765,14 +765,15 @@ changed: [default]
         <h2>MySql user module</h2><a href="https://docs.ansible.com/ansible/mysql_user_module.html">https://docs.ansible.com/ansible/mysql_user_module.html</a>
       </section>
       <section data-bespoke-backdrop="emphatic" class="emphatic-text">
-        <h2>database.yml</h2>
+        <h2>webserver.yml</h2>
         <pre><code class="language-yaml">---
 - hosts: all
   become: true
   tasks:
-  - name: install tools
+  - name: install apache2 and other components
     apt: name={{ item }} state=present update_cache=yes
     with_items:
+      ...
       - python-mysqldb
       </code></pre>
       </section>
@@ -833,6 +834,204 @@ changed: [default]
         <h2>Db down</h2>
         <pre><code class="language-yaml">$ sudo service mysql stop
 </code></pre>
+      </section>
+      <section data-bespoke-backdrop="emphatic" class="emphatic-text">
+        <h2>Nginx - loadbalancer</h2>
+      </section>
+      <section data-bespoke-backdrop="emphatic" class="emphatic-text">
+        <h3>loadbalancer.yml</h3>
+        <pre><code class="language-yaml">---
+- hosts: loadbalancer
+  become: true
+  tasks:
+  
+    - name: install nginx
+      apt: name={{ item }} state=present update_cache=yes
+      with_items:
+        - nginx
+        
+    - name: ensure nginx is started
+      service: name=nginx state=started enabled=yes
+      
+  handlers:
+    - name: restart nginx
+      service: name=nginx state=restarted
+      </code></pre>
+      </section>
+      <section data-bespoke-backdrop="emphatic" class="emphatic-text">
+        <h2>Vagrant multi machine</h2><a href="https://www.vagrantup.com/docs/multi-machine/">https://www.vagrantup.com/docs/multi-machine/</a>
+      </section>
+      <section data-bespoke-backdrop="emphatic" class="emphatic-text">
+        <h3>Vagrantfile - multi machine</h3>
+        <pre><code class="language-yaml">config.vm.define "web" do |web|
+  web.vm.box = "debian/jessie64"
+  web.vm.hostname = "rocannon-web"
+end
+
+config.vm.define "db" do |db|
+  db.vm.box = "debian/jessie64"
+  db.vm.hostname = "rocannon-db"
+end
+
+config.vm.define "lb" do |lb|
+  lb.vm.box = "debian/jessie64"
+  lb.vm.hostname = "rocannon-lb"
+end
+</code></pre>
+      </section>
+      <section data-bespoke-backdrop="emphatic" class="emphatic-text">
+        <h3>Multi machine provisioning</h3>
+        <pre><code class="language-yaml">config.vm.provision :ansible do |ansible|
+  ansible.groups = {
+    "webserver" => ["web"],
+    "dbserver" => ["db"],
+    "loadbalancer" => ["lb"],
+    "all_groups:children" => ["development"]
+    
+  }
+  ansible.playbook = "ansible/playbook.yml"
+end
+</code></pre>
+      </section>
+      <section data-bespoke-backdrop="emphatic" class="emphatic-text">
+        <h3>Inventory for multi machine</h3>
+        <pre><code class="language-yaml">[webserver]
+web1
+
+[dbserver]
+db
+
+[loadbalancer]
+lb
+</code></pre>
+      </section>
+      <section data-bespoke-backdrop="emphatic" class="emphatic-text">
+        <h3>Vagrant command for multi machine</h3>
+        <pre><code class="language-yaml">$ vagrant ssh [machine]
+$ vagrant provision [machine]
+</code></pre>
+      </section>
+      <section data-bespoke-backdrop="emphatic" class="emphatic-text">
+        <h3>Change playbook hosts</h3>
+        <pre><code class="language-yaml">- hosts: webserver
+- hosts: dbserver
+- hosts: loadbalancer
+</code></pre>
+      </section>
+      <section data-bespoke-backdrop="emphatic" class="emphatic-text">
+        <h3>Verify</h3>
+        <h4>App</h4><a href="http://localhost:4444/">http://localhost:4444/</a>
+        <a href="http://localhost:4444/db">http://localhost:4444/db</a>
+        <h4>Nginx</h4><a href="http://localhost:4445/">http://localhost:4445/</a>
+      </section>
+      <section data-bespoke-backdrop="emphatic" class="emphatic-text">
+        <h2>Web to db connection</h2>
+        <pre><code class="language-yaml"># demo.wsgi
+os.environ['DATABASE_URI'] = 'mysql://demo:demo@192.168.33.67/demo'
+
+# or
+os.environ['DATABASE_URI'] = 'mysql://demo:demo@192.168.33.67/demo'
+</code></pre>
+      </section>
+      <section data-bespoke-backdrop="emphatic" class="emphatic-text">
+        <h3>/etc/hosts</h3>
+        <pre><code class="language-yaml">- name: edit etc hosts
+  lineinfile:
+    path: /etc/hosts
+    state: present
+    line: '192.168.33.67 db'
+    </code></pre>
+      </section>
+      <section data-bespoke-backdrop="emphatic" class="emphatic-text">
+        <h2>Templates</h2>
+        <p>templates/nginx.conf.j2</p>
+        <pre><code class="language-yaml">upstream web {
+  {% for server in groups.webserver %}
+      server {{ server }};
+  {% endfor %}
+}
+
+server {
+    listen 80;
+    
+    location / {
+        proxy_pass http://web;
+    }
+}
+</code></pre>
+      </section>
+      <section data-bespoke-backdrop="emphatic" class="emphatic-text">
+        <h2>Templates</h2>
+        <p>loadbalancer.yml</p>
+        <pre><code class="language-yaml">- name: edit /etc/hosts
+  lineinfile:
+    path: /etc/hosts
+    state: present
+    line: '192.168.33.66 web'
+    
+- name: config nginx site
+  template:
+    src=templates/nginx.conf.j2
+    dest=/etc/nginx/sites-available/demo
+    mode=0644
+  notify: restart nginx
+  
+- name: de-activate default nginx site
+  file: path=/etc/nginx/sites-enabled/default state=absent
+  notify: restart nginx
+  
+- name: activate demo nginx site
+  file:
+    src=/etc/nginx/sites-available/demo.conf
+    dest=/etc/nginx/sites-enabled/demo
+    state=link
+  notify: restart nginx
+  </code></pre>
+      </section>
+      <section data-bespoke-backdrop="emphatic" class="emphatic-text">
+        <h3>Vagrantfile - multi machine</h3>
+        <pre><code class="language-yaml">config.vm.define "web1" do |web1|
+  web1.vm.box = "debian/jessie64"
+  web1.vm.hostname = "rocannon-web-1"
+end
+config.vm.define "web2" do |web2|
+  web2.vm.box = "debian/jessie64"
+  web2.vm.hostname = "rocannon-web-2"
+end
+</code></pre>
+      </section>
+      <section data-bespoke-backdrop="emphatic" class="emphatic-text">
+        <h3>Vagrantfile - multi machine</h3>
+        <h3>provisioning</h3>
+        <pre><code class="language-yaml">config.vm.provision :ansible do |ansible|
+  ansible.groups = {
+    "webserver" => ["web1" , "web2"],
+    "dbserver" => ["db"],
+    "loadbalancer" => ["lb"],
+    "all_groups:children" => ["development"]
+    
+  }
+  ansible.playbook = "ansible/playbook.yml"
+end
+</code></pre>
+      </section>
+      <section data-bespoke-backdrop="emphatic" class="emphatic-text">
+        <h3>loadbalancer.yml</h3>
+        <pre><code class="language-yaml">- name: edit /etc/hosts
+  lineinfile:
+    path: /etc/hosts
+    state: present
+    line: "{{ item.ip }} {{ item.name }}"
+  with_items:
+    - { ip: 192.168.33.65, name: web1 }
+    - { ip: 192.168.33.66, name: web2 }
+    </code></pre>
+      </section>
+      <section data-bespoke-backdrop="emphatic" class="emphatic-text">
+        <h2>Roles</h2>
+      </section>
+      <section data-bespoke-backdrop="emphatic" class="emphatic-text">
+        <h2>Variables</h2>
       </section>
       <section data-bespoke-backdrop="emphatic" class="emphatic-text">
         <h2>end</h2>
