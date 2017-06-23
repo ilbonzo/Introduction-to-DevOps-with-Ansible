@@ -1201,12 +1201,75 @@ html
 
       section.emphatic-text(data-bespoke-backdrop='emphatic')
         h2 Roles
+        h3 reuse the code
 
       section.emphatic-text(data-bespoke-backdrop='emphatic')
-        h2 Variables
+        h3 init role
+        pre
+          code.language-yaml.
+            ╰─➤  ansible-galaxy init apache
+                - apache was created successfully
 
+      section.emphatic-text(data-bespoke-backdrop='emphatic')
+        h2 Roles
+        pre
+          code.language-yaml.
+            ╰─➤  ls -l apache
+              total 0
+              drwxr-xr-x  10 bonzo  staff  340 Dec  6 10:45 files
+              drwxr-xr-x  10 bonzo  staff  340 Dec  6 10:45 handlers
+              drwxr-xr-x  10 bonzo  staff  340 Dec  6 10:45 tasks
+              drwxr-xr-x   5 bonzo  staff  170 Dec  6 10:45 templates
 
+      section.emphatic-text(data-bespoke-backdrop='emphatic')
+        h3 main.yml - default file
+        pre
+          code.language-yaml.
+            ╰─➤  ls apache/tasks
+                 main.yml
 
+      section.emphatic-text(data-bespoke-backdrop='emphatic')
+        h2 Converting file to role
+        h3 copy task from webserver file to main.yml
+
+      section.emphatic-text(data-bespoke-backdrop='emphatic')
+        h2 Converting file to role
+        h3 webserver.yml
+          pre
+          code.language-yaml.
+            ---
+            - hosts: webserver
+              become: true
+              roles:
+                - apache
+
+      section.emphatic-text(data-bespoke-backdrop='emphatic')
+        h2 site.yml
+        p pleybook with include of other playbook
+
+      section.emphatic-text(data-bespoke-backdrop='emphatic')
+        h2 Variables facts
+          pre
+          code.language-yaml.
+            $ ansible -m setup db
+
+      section.emphatic-text(data-bespoke-backdrop='emphatic')
+        h2 Variables default
+        p defaults/main.yml
+          pre
+          code.language-yaml.
+            db_user: demo
+            db_name: demo
+            db_password: demo
+
+      section.emphatic-text(data-bespoke-backdrop='emphatic')
+        h2 Variables vars
+        p group_vars/database
+          pre
+          code.language-yaml.
+            db_user: demo
+            db_name: demo
+            db_password: demo
 
       section.emphatic-text(data-bespoke-backdrop='emphatic')
         h2 end
