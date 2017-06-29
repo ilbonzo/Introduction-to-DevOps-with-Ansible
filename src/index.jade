@@ -1236,12 +1236,12 @@ html
         h2 Converting file to role
         h3 webserver.yml
           pre
-          code.language-yaml.
-            ---
-            - hosts: webserver
-              become: true
-              roles:
-                - apache
+            code.language-yaml.
+              ---
+              - hosts: webserver
+                become: true
+                roles:
+                  - apache
 
       section.emphatic-text(data-bespoke-backdrop='emphatic')
         h2 site.yml
@@ -1250,26 +1250,26 @@ html
       section.emphatic-text(data-bespoke-backdrop='emphatic')
         h2 Variables facts
           pre
-          code.language-yaml.
-            $ ansible -m setup db
+            code.language-yaml.
+              $ ansible -m setup db
 
       section.emphatic-text(data-bespoke-backdrop='emphatic')
         h2 Variables default
         p defaults/main.yml
           pre
-          code.language-yaml.
-            db_user: demo
-            db_name: demo
-            db_password: demo
+            code.language-yaml.
+              db_user: demo
+              db_name: demo
+              db_password: demo
 
       section.emphatic-text(data-bespoke-backdrop='emphatic')
         h2 Variables vars
         p group_vars/database
           pre
-          code.language-yaml.
-            db_user: demo
-            db_name: demo
-            db_password: demo
+            code.language-yaml.
+              db_user: demo
+              db_name: demo
+              db_password: demo
 
       section.emphatic-text(data-bespoke-backdrop='emphatic')
         h2 end
@@ -1283,6 +1283,7 @@ html
           li <a href="http://devopsreactions.tumblr.com/">devopsreactions.tumblr.com</a>
           li <a href="http://losviluppatore.it/">losviluppatore.it</a>
           li <a href="https://www.ibuildings.it/">buildings.it</a>
+          li <a href="https://www.udemy.com/mastering-ansible/learn/v4/overview">mastering ansible</a>
 
       section.emphatic-text(data-bespoke-backdrop='emphatic')
         h1 Questions?
