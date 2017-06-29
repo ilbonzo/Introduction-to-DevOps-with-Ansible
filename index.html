@@ -1060,13 +1060,12 @@ end
       <section data-bespoke-backdrop="emphatic" class="emphatic-text">
         <h2>Converting file to role</h2>
         <h3>webserver.yml
-          <pre></pre><code class="language-yaml">
-            ---
-            - hosts: webserver
-              become: true
-              roles:
-                - apache
-                </code>
+          <pre><code class="language-yaml">---
+- hosts: webserver
+  become: true
+  roles:
+    - apache
+    </code></pre>
         </h3>
       </section>
       <section data-bespoke-backdrop="emphatic" class="emphatic-text">
@@ -1075,29 +1074,26 @@ end
       </section>
       <section data-bespoke-backdrop="emphatic" class="emphatic-text">
         <h2>Variables facts
-          <pre></pre><code class="language-yaml">
-            $ ansible -m setup db
-            </code>
+          <pre><code class="language-yaml">$ ansible -m setup db
+</code></pre>
         </h2>
       </section>
       <section data-bespoke-backdrop="emphatic" class="emphatic-text">
         <h2>Variables default</h2>
         <p>defaults/main.yml
-          <pre></pre><code class="language-yaml">
-            db_user: demo
-            db_name: demo
-            db_password: demo
-            </code>
+          <pre><code class="language-yaml">db_user: demo
+db_name: demo
+db_password: demo
+</code></pre>
         </p>
       </section>
       <section data-bespoke-backdrop="emphatic" class="emphatic-text">
         <h2>Variables vars</h2>
         <p>group_vars/database
-          <pre></pre><code class="language-yaml">
-            db_user: demo
-            db_name: demo
-            db_password: demo
-            </code>
+          <pre><code class="language-yaml">db_user: demo
+db_name: demo
+db_password: demo
+</code></pre>
         </p>
       </section>
       <section data-bespoke-backdrop="emphatic" class="emphatic-text">
@@ -1112,6 +1108,7 @@ end
           <li><a href="http://devopsreactions.tumblr.com/">devopsreactions.tumblr.com</a></li>
           <li><a href="http://losviluppatore.it/">losviluppatore.it</a></li>
           <li><a href="https://www.ibuildings.it/">buildings.it</a></li>
+          <li><a href="https://www.udemy.com/mastering-ansible/learn/v4/overview">mastering ansible</a></li>
         </ul>
       </section>
       <section data-bespoke-backdrop="emphatic" class="emphatic-text">
